@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ns1:db
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:ns1='testspace'
+    xsi:schemaLocation='testspace test.xsd'
+    dbName="mydb"
+    xmlns:ns2="http://www.w3.org/1999/xhtml"
+>
+    <ns1:person 
+            userID="1"
+            firstName="jane" 
+            middleName="alice"  
+            lastName="doe"
+            email="jane.doe@gmail.com"
+            country="Sweden"
+            streetAddress="old road 5"
+            city="Stockholm"
+            postalCode="958 58"
+   />
+   
+    
+    <ns1:person 
+        userID="2"
+        firstName="john" 
+        middleName="michael"  
+        lastName="doe"
+        email="john.doe@gmail.com"
+        country="Sweden"
+        streetAddress="old road 5"
+        city="Stockholm"
+        postalCode="958 58"
+    />
+    
+    
+    <ns1:person userID="3"
+        firstName="jana" 
+        middleName="banana"  
+        lastName="doe"
+        email="john.doe@gmail.com"
+        country="Sweden"
+        streetAddress="old road 5"
+        city="Stockholm"
+        postalCode="958 58" />
+    
+    <ns1:user 
+        userID="1"
+        userName="jandoe"
+        password="1234"
+    />
+    <ns1:user 
+        userID="2"
+        userName="johdoe"
+        password="1234"
+    />
+    <ns1:user 
+        userID="3"
+        userName="janban"
+        password="1234"
+    />
+    
+    <ns1:subject subjectID="1" subjectName="subject one">
+        <ns1:descriptionHTML  xmlns="http://www.w3.org/1999/xhtml" > 
+            <h1> Hello world </h1>
+        </ns1:descriptionHTML>
+        <ns1:chapter chapterID="1" chapterName="chapter one" priority="1">
+             <ns1:contentHTML xmlns="http://www.w3.org/1999/xhtml"> 
+                <h1> Hello world </h1>
+             </ns1:contentHTML>
+        </ns1:chapter>
+        <ns1:quiz quizID="1" quizName="quiz 1">
+            <ns1:question questionID="1" text="Vad är det för skillnad på trä häst">
+                <ns1:answer questionID="1" answerText="kan varken cykla" truthValue="true"/>
+                <ns1:answer questionID="1" answerText="kan cykla" truthValue="false"/>
+            </ns1:question>
+        </ns1:quiz>
+    </ns1:subject>
+    
+    <ns1:subject subjectID="2" subjectName="subject one">
+        <ns1:descriptionHTML  xmlns="http://www.w3.org/1999/xhtml" > 
+            <h1> Hello world </h1>
+        </ns1:descriptionHTML>
+        <ns1:chapter chapterID="1" subjectID="2" chapterName="chapter one" priority="1">
+             <ns1:contentHTML xmlns="http://www.w3.org/1999/xhtml"> 
+                <h1> Hello world </h1>
+             </ns1:contentHTML>
+        </ns1:chapter>
+        <ns1:quiz quizID="1" quizName="quiz 1">
+            <ns1:question questionID="1" text="Vad är det för skillnad på trä häst">
+                <ns1:answer questionID="1" answerText="kan varken cykla" truthValue="true"/>
+                <ns1:answer questionID="1" answerText="kan cykla" truthValue="false"/>
+            </ns1:question>
+        </ns1:quiz>
+    </ns1:subject>
+
+</ns1:db>

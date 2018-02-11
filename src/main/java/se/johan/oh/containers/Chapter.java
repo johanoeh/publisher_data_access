@@ -29,6 +29,7 @@ public class Chapter {
    
     
     private Integer chapterID;
+    private Integer subjectID;
     private String chapterName;
     private Integer priority;
     private String contentHTML;

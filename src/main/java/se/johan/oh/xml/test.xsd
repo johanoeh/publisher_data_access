@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<xs:schema 
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="testspace"
+        xmlns:r="testspace"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        elementFormDefault="qualified">
+    
+     <!-- Importing XHTML namespace -->
+  <xs:import namespace="http://www.w3.org/1999/xhtml"
+      schemaLocation="http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd"/>
+
+    <xs:element name="db">
+        <xs:complexType>
+            <xs:sequence>  
+                <!-- person elements -->
+                <xs:element name="person" type="r:personType" maxOccurs="unbounded"/>
+                <!--user elements -->
+                <xs:element name="user" type="r:userType" maxOccurs="unbounded"/>
+                <!-- subject element -->
+                <xs:element name="subject" type="r:subjectType" maxOccurs="unbounded" minOccurs="0"/>    
+            </xs:sequence>
+            <xs:attribute name="dbName" use="required"/>   
+        </xs:complexType>
+        
+         <!-- keys and references ''''''''''''''''''''''''''''''''''''''''''' -->
+         
+        <xs:key name="subjectIDKey">
+            <xs:selector xpath="r:subject"/>
+            <xs:field xpath="@subjectID"/>
+        </xs:key>
+        
+        <xs:keyref name="subjectIDRef" refer="r:subjectIDKey">
+            <xs:selector xpath="r:subject/r:chapter"/>
+            <xs:field xpath="@subjectID"/>
+        </xs:keyref>
+
+         <xs:keyref name="userRef" refer="r:userIDKey">
+                       <xs:selector xpath="r:user"/>
+                       <xs:field xpath="@userID"/>
+         </xs:keyref> 
+         
+        <xs:key name="userIDKey">
+            <xs:selector xpath="r:person"/>
+            <xs:field xpath="@userID"/>
+        </xs:key>
+    </xs:element>
+    
+    <!-- type definitions '''''''''''''''''''''''''''''''''''''''''''''''''''-->
+    
+     <xs:complexType name="Html">
+        <xs:complexContent>
+          <xs:extension base="xhtml:Block">
+            <xs:attributeGroup ref="xhtml:attrs"/>
+            <xs:attribute name="onload" type="xhtml:Script"/>
+            <xs:attribute name="onunload" type="xhtml:Script"/>
+          </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+     
+    <xs:complexType name="userType">
+       <xs:attribute name="userID" type="xs:integer" use="required"/>
+       <xs:attribute name="userName" type="xs:string" use="required"/>
+       <xs:attribute name="password" type="xs:string" use="required"/>
+    </xs:complexType>
+    
+    
+    <xs:complexType name="personType">
+            <xs:attribute name="userID" type="xs:integer" use="required"/>
+            <xs:attribute name="firstName" type="xs:string" use="required"/>
+            <xs:attribute name="middleName" type="xs:string" use="required"/>
+            <xs:attribute name="lastName" type="xs:string" use="required"/>
+            <xs:attribute name="email" type="xs:string" use="required"/>
+            <xs:attribute name="country" type="xs:string" use="required"/>
+            <xs:attribute name="streetAddress" type="xs:string" use="required"/>
+            <xs:attribute name="city" type="xs:string" use="required"/>
+            <xs:attribute name="postalCode" type="xs:string" use="required"/>
+     </xs:complexType> 
+     
+     <xs:complexType name="subjectType">
+             <xs:sequence>
+               <xs:element name="descriptionHTML" type="r:Html" maxOccurs="1">   
+               </xs:element>
+               <xs:element name="chapter" maxOccurs="unbounded" type="r:chapterType"/>
+               <xs:element name="quiz" type="r:quizType">  
+               </xs:element>
+             </xs:sequence>
+             <xs:attribute name="subjectID" type="xs:integer"></xs:attribute>
+             <xs:attribute name="subjectName" type="xs:string"></xs:attribute>
+     </xs:complexType>
+     
+     <xs:complexType name="chapterType">
+         <xs:sequence>
+            <xs:element name="contentHTML" type="r:Html" maxOccurs="1">   
+            </xs:element>
+         </xs:sequence>
+         <xs:attribute name="chapterID" type="xs:integer"/>
+         <xs:attribute name="subjectID" type="xs:integer"/>
+         <xs:attribute name="chapterName" type="xs:string"/>
+         <xs:attribute name="priority" type="xs:integer"/>
+     </xs:complexType>
+     
+      <xs:complexType name="quizType">
+         <xs:sequence>
+             <xs:element name="question" type="r:questionType" >
+             </xs:element>
+         </xs:sequence>
+         <xs:attribute name="quizID" type="xs:integer"/>
+         <xs:attribute name="quizName" type="xs:string"/>
+     </xs:complexType>
+     
+     <xs:complexType name="questionType">
+         <xs:sequence>
+             <xs:element name="answer" type="r:answerType" maxOccurs="unbounded"/>
+         </xs:sequence>
+         <xs:attribute name="questionID" type="xs:integer"/>
+         <xs:attribute name="text" type="xs:string"/>
+     </xs:complexType>
+     
+     <xs:complexType name="answerType">
+         <xs:attribute name="questionID" type="xs:integer"/>
+         <xs:attribute name="answerText"/>
+         <xs:attribute name="truthValue" type="xs:boolean"/>
+     </xs:complexType> 
+
+</xs:schema>
