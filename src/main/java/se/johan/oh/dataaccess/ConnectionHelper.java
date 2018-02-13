@@ -27,17 +27,18 @@ public class ConnectionHelper {
         Connection dbConnection = null;
         try {
             Class.forName(DB_DRIVER);
-
         } catch (ClassNotFoundException e) {
             System.err.println(e.getMessage());
 
         }
         try {
             dbConnection = DriverManager.getConnection(DB_CONNECTION, USER, PASSWORD);
-         
+            if(dbConnection== null){
+                System.err.println("Connection is null");
+            }
             return dbConnection;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
         return dbConnection;
     }

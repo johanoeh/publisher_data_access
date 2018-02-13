@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package se.johan.oh.dataaccess;
 
 import se.johan.oh.containers.Chapter;
@@ -24,26 +20,25 @@ public class ChapterDataAccess {
     /**
      * @param chapter to add
      * @param subjectID the id of subject chapter belongs to
+     * @return  key of inserted value
      */
-    public void create(Chapter chapter, int subjectID) {
+    public int create(Chapter chapter) {
+        int insertedKey = -1;
         try (Connection connection = ConnectionHelper.getConnection()) {
             PreparedStatement preparedStatement
                     = connection.prepareStatement(Chapter.INSERT_CHAPTER_SQL,Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, chapter.getChapterName());
-            preparedStatement.setInt(2, chapter.getPriority());
-            preparedStatement.setString(3, chapter.getContentHTML());
+            preparedStatement.setInt(1,chapter.getSubjectID());
+            preparedStatement.setString(2, chapter.getChapterName());
+            preparedStatement.setInt(3, chapter.getPriority());
+            preparedStatement.setString(4, chapter.getContentHTML());
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if(resultSet.next()){
-                int insertedKey = resultSet.getInt(1);
-                preparedStatement = connection.prepareStatement(Chapter.INSERT_SUBJECT_HAS_CHAPTERS_SQL);
-                preparedStatement.setInt(1, subjectID);
-                preparedStatement.setInt(2, insertedKey);
-                preparedStatement.executeUpdate();
-            } 
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if(rs.next())
+                insertedKey = rs.getInt(1);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+        return insertedKey;
     }
     
     /**
@@ -61,6 +56,7 @@ public class ChapterDataAccess {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 chapter = new Chapter(resultSet.getInt(Chapter.CHAPTER_ID),
+                        resultSet.getInt(Chapter.SUBJECT_ID),
                         resultSet.getString(Chapter.CHAPTER_NAME),
                         resultSet.getInt(Chapter.PRIORITY),
                         resultSet.getString(Chapter.HTML_CONTENT));
@@ -84,6 +80,7 @@ public class ChapterDataAccess {
             ResultSet resultSet = statement.executeQuery(Chapter.SELECT_ALL_CHAPTERS_SQL);
             while (resultSet.next()) {
                 Chapter chapter = new Chapter(resultSet.getInt(Chapter.CHAPTER_ID),
+                        resultSet.getInt(Chapter.SUBJECT_ID),
                         resultSet.getString(Chapter.CHAPTER_NAME),
                         resultSet.getInt(Chapter.PRIORITY),
                         resultSet.getString(Chapter.HTML_CONTENT));
@@ -123,6 +120,5 @@ public class ChapterDataAccess {
     public void delete(int chapterID){
         ConnectionHelper.delete(chapterID, Chapter.DELETE_CHAPTER_SQL);
     }
-
-    
+  
 }

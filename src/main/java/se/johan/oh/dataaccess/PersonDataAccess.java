@@ -20,15 +20,21 @@ public class PersonDataAccess {
     /**
      * @param person to create
      */
-    public void create(Person person) {
+    public int create(Person person) {
+        int id = -1;
         try (Connection connection = ConnectionHelper.getConnection()) {
             PreparedStatement preparedStatement
-                    = connection.prepareStatement(Person.INSERT_PERSONAL_INFO_SQL);
-            setPreparedStatementParams(preparedStatement, person, false);
+                    = connection.prepareStatement(Person.INSERT_PERSONAL_INFO_SQL,Statement.RETURN_GENERATED_KEYS);
+            prepare(preparedStatement, person, false);
             preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if(rs.next()){
+                id= rs.getInt(1);
+            }
         } catch (SQLException exception) {
             System.err.println(exception);
         }
+        return id;
     }
 
     /**
@@ -53,8 +59,9 @@ public class PersonDataAccess {
         try (Connection connection = ConnectionHelper.getConnection()) {
             PreparedStatement preparedStatement
                     = connection.prepareStatement(Person.UPDATE_PERSONAL_INFO_SQL);
-            setPreparedStatementParams(preparedStatement, person, true);
+            prepare(preparedStatement, person, true);
             preparedStatement.executeUpdate();
+           
         } catch (SQLException exception) {
             System.err.println(exception);
         }
@@ -102,7 +109,7 @@ public class PersonDataAccess {
     
     
     
-    private void setPreparedStatementParams(PreparedStatement preparedStatement, Person person, boolean isUpdate) throws SQLException {
+    private void prepare(PreparedStatement preparedStatement, Person person, boolean isUpdate) throws SQLException {
         preparedStatement.setInt(1, person.getUserID());
         preparedStatement.setString(2, person.getFirstName());
         preparedStatement.setString(3, person.getMiddleName());

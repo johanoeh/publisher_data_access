@@ -11,12 +11,11 @@ public class Chapter {
     public static final String CHAPTER_NAME = "CHAPTER_NAME";
     public static final String PRIORITY = "PRIORITY";
     public static final String HTML_CONTENT ="HTML_CONTENT";
+    public static final String SUBJECT_ID ="SUBJECT_ID";
     
     /*SQL queries*/
     public static final String INSERT_CHAPTER_SQL = 
-            "INSERT INTO CHAPTER (CHAPTER_NAME, PRIORITY, HTML_CONTENT) VALUES (?,?,?)";
-    public static final String INSERT_SUBJECT_HAS_CHAPTERS_SQL =
-            "INSERT INTO SUBJECT_HAS_CHAPTER (SUBJECT_ID, CHAPTER_ID) VALUES(?,?)";
+            "INSERT INTO CHAPTER (SUBJECT_ID, CHAPTER_NAME, PRIORITY, HTML_CONTENT) VALUES (?,?,?,?)";
     public static final String  DELETE_CHAPTER_SQL = 
             "DELETE FROM CHAPTER WHERE CHAPTER_ID = ? ";
     public static final String UPDATE_CHAPTER_SQL = 
@@ -34,8 +33,9 @@ public class Chapter {
     private Integer priority;
     private String contentHTML;
 
-    public Chapter(Integer chapterID, String chapterName, Integer priority, String contentHTML) {
+    public Chapter(Integer chapterID,int subjectID ,String chapterName, Integer priority, String contentHTML) {
         this.chapterID = chapterID;
+        this.subjectID=subjectID;
         this.chapterName = chapterName;
         this.priority = priority;
         this.contentHTML = contentHTML;
@@ -43,6 +43,7 @@ public class Chapter {
     
     public Chapter(String chapterName, Integer priority, String contentHTML) {
         this.chapterID = 0;
+        this.subjectID = 0;
         this.chapterName = chapterName;
         this.priority = priority;
         this.contentHTML = contentHTML;
@@ -109,5 +110,9 @@ public class Chapter {
                CHAPTER_NAME+" : "+ chapterName+", "+
                PRIORITY + " : "+ priority+", "+
                HTML_CONTENT+" : "+ contentHTML;                  
+    }
+
+    public int getSubjectID() {
+        return subjectID;
     }
 }

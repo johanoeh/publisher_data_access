@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,8 +22,8 @@ import java.util.logging.Logger;
  */
 public class QuizDataAccess {
 
-    public void create(Quiz quiz) {
-        prepareAndUpdate(quiz, false, Quiz.CREATE_SQL);
+    public int create(Quiz quiz) {
+       return prepareAndUpdate(quiz, false, Quiz.CREATE_SQL);
     }
 
     public Quiz read(int quizID) {
@@ -85,20 +86,24 @@ public class QuizDataAccess {
         ConnectionHelper.delete(subjectID, Quiz.DELETE_BY_SUBJECT_ID_SQL);
     }
 
-    private void prepareAndUpdate(Quiz quiz, boolean isUpdate, String sql) {
+    private int prepareAndUpdate(Quiz quiz, boolean isUpdate, String sql) {
+        int id = -1;
         try (Connection connection = ConnectionHelper.getConnection()) {
             PreparedStatement prepareStatement;
-            prepareStatement = connection.prepareStatement(sql);
+            prepareStatement = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             prepareStatement.setInt(1, quiz.getSubjectID());
             prepareStatement.setString(2, quiz.getQuizName());
             if (isUpdate) {
                 prepareStatement.setInt(3, quiz.getQuizID());
             }
             prepareStatement.executeUpdate();
+            ResultSet rs = prepareStatement.getGeneratedKeys();
+            if(rs.next())
+                id = rs.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(QuizDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        return id;
     }
 
 }

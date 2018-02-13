@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,9 +19,10 @@ public class AnswerDataAccess {
     
     /**
      * @param answer
+     * @return 
      */
-    public void create(Answer answer) {
-        prepareUpdate(answer, Answer.CREATE_SQL, Boolean.FALSE);
+    public int create(Answer answer) {
+        return prepareUpdate(answer, Answer.CREATE_SQL, Boolean.FALSE);
     }
     
     /**
@@ -75,10 +77,11 @@ public class AnswerDataAccess {
         ConnectionHelper.delete(answerID, Answer.DELETE_BY_ANSWER_ID_SQL);
     }
     
-    private void prepareUpdate(Answer answer, String sql, boolean isUpdate) {
+    private int prepareUpdate(Answer answer, String sql, boolean isUpdate) {
+         int id =-1;
         try (Connection connection = ConnectionHelper.getConnection()) {
             PreparedStatement prepareStatement
-                    = connection.prepareStatement(sql);
+                    = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             prepareStatement.setInt(1, answer.getQuestionID());
             prepareStatement.setString(2, answer.getAnswerText());
             prepareStatement.setBoolean(3, answer.getTruthValue());
@@ -86,8 +89,15 @@ public class AnswerDataAccess {
                 prepareStatement.setInt(4, answer.getAnswerID());
             }
             prepareStatement.executeUpdate();
+            ResultSet rs =prepareStatement.getGeneratedKeys();
+            
+            if(rs.next()){
+                 id = rs.getInt(1);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(AnswerDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return id;
     } 
 }

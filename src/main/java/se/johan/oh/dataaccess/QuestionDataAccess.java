@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,8 +20,8 @@ import java.util.logging.Logger;
 public class QuestionDataAccess {
     
     
-    public void create(Question question) {
-        prepareUpdate(question, Question.CREATE_SQL, false); 
+    public int create(Question question) {
+        return prepareUpdate(question, Question.CREATE_SQL, false); 
     }
     
     /**
@@ -53,18 +54,24 @@ public class QuestionDataAccess {
         );
     }
     
-    private void prepareUpdate(Question question, String sql, boolean isUpdate){
+    private int prepareUpdate(Question question, String sql, boolean isUpdate){
+        int id = -1;
         try (Connection connection = ConnectionHelper.getConnection()) {
-            PreparedStatement prepareStatement = connection.prepareStatement(sql);
+            PreparedStatement prepareStatement = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             prepareStatement.setInt(1, question.getQuizID());
             prepareStatement.setString(2, question.getQuestionText());
             if (isUpdate) {
                 prepareStatement.setInt(3, question.getQuestionID());
             }
             prepareStatement.executeUpdate();
+            ResultSet rs = prepareStatement.getGeneratedKeys();
+            if(rs.next()) {
+                id= rs.getInt(1);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(QuestionDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return id;
     }
     
     void update(Question question) {

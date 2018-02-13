@@ -45,6 +45,7 @@ public class DataAccessFacade {
      * @return
      */
     public List<Subject> readAllSubjects() {
+       System.out.print("Hello from read subject");
         return subjectDAO.readAll();
     }
 
@@ -62,8 +63,8 @@ public class DataAccessFacade {
      *
      * @param subject to add
      */
-    public void createSubject(Subject subject) {
-        subjectDAO.create(subject);
+    public int create(Subject subject) {
+        return subjectDAO.create(subject);
     }
 
     /**
@@ -80,10 +81,10 @@ public class DataAccessFacade {
     
     /**
      * @param chapter to add
-     * @param subjectID the id of subject chapter belongs to
+     * @return 
      */
-    public void createChapter(Chapter chapter, int subjectID) {
-        chapterDAO.create(chapter, subjectID);
+    public int create(Chapter chapter) {
+        return chapterDAO.create(chapter);
     }
 
     public Chapter readChapter(int chapterID) {
@@ -123,8 +124,8 @@ public class DataAccessFacade {
      *
      * @param user
      */
-    public void createUser(User user){
-        userDAO.create(user);
+    public int create(User user){
+        return userDAO.create(user);
     }
     
     /**
@@ -161,8 +162,8 @@ public class DataAccessFacade {
     }
     
     /*Access methods for Person ---------------------------------------------*/
-    public void createPerson(Person person){
-       personDAO.create(person);
+    public int create(Person person){
+       return personDAO.create(person);
     }
     
     public Person readPerson(int userID){
@@ -183,8 +184,8 @@ public class DataAccessFacade {
     }
     
     /*Access methods for quizzes----------------------------------------------*/
-    public void create(Quiz quiz){
-        quizDAO.create(quiz);
+    public int create(Quiz quiz){
+       return quizDAO.create(quiz);
     }
     
     public List<Quiz> readQuiz(int subjectID){
@@ -206,8 +207,8 @@ public class DataAccessFacade {
     
     /* Access methods for Questions ------------------------------------------*/
     
-    public void createQuestion(Question question){
-        questionDAO.create(question);
+    public int createQuestion(Question question){
+        return questionDAO.create(question);
     }
     
     public List<Question> readQuestionByQuizID(int quizID){
@@ -223,8 +224,8 @@ public class DataAccessFacade {
     }
     
     /* Access methods for answers --------------------------------------------*/  
-    public void create(Answer answer){
-        answerDAO.create(answer);
+    public int create(Answer answer){
+        return answerDAO.create(answer);
     }
     
     public List<Answer> readAnswerByQuestionID(int questionID){

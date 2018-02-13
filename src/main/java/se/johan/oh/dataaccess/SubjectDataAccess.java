@@ -76,18 +76,24 @@ public class SubjectDataAccess {
     /**
      * Adds a new subject to db
      * @param subject to add
+     * @return 
      */
-    public void create(Subject subject) {
-        try (Connection connection = ConnectionHelper.getConnection()) {
+    public int create(Subject subject) {
+        int insertedKey = -1;
+        try (Connection connection = ConnectionHelper.getConnection()) { 
             PreparedStatement preparedStatement
-                    = connection.prepareStatement(Subject.INSERT_SUBJECT_SQL);
+                    = connection.prepareStatement(Subject.INSERT_SUBJECT_SQL,Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, subject.getSubjectName());
             preparedStatement.setString(2, subject.getDescriptionHTML());
             preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if(resultSet.next())
+                insertedKey = resultSet.getInt(1);
 
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+        return insertedKey;
     }
     
     /**

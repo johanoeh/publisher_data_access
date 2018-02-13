@@ -34,6 +34,7 @@ public class Subject implements Serializable{
     public Subject(String subjectName, String descriptionHTM) {
         this.descriptionHTML = descriptionHTM;
         this.subjectName = subjectName;
+        this.subjectID=0;
     }
     
     /**

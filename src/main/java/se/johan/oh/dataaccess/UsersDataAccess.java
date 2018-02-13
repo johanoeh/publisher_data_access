@@ -23,16 +23,24 @@ public class UsersDataAccess {
     /**
      * @param user
      */
-    public void create(User user){
+    public int create(User user){
+        int id = -1;
         try (Connection connection = ConnectionHelper.getConnection()) {
             PreparedStatement preparedStatement
-                    = connection.prepareStatement(User.CREATE_USER_SQL);
+                    = connection.prepareStatement(User.CREATE_USER_SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user.getUserName());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if(rs.next()){
+                id = rs.getInt(1);
+            }else {
+            
+            }
         } catch (SQLException exception) {
             System.err.println(exception);
         }
+        return id;
     }
     
     /**
