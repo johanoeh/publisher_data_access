@@ -44,10 +44,6 @@
             <xs:selector xpath="r:person"/>
             <xs:field xpath="@userID"/>
         </xs:key>
-        <xs:key name="answerIDKey">
-            <xs:selector xpath="r:subject/r:quiz/r:question/r:answer"/>
-            <xs:field xpath="@answerID"/>
-        </xs:key>
     </xs:element>
     
     <!-- type definitions '''''''''''''''''''''''''''''''''''''''''''''''''''-->
@@ -123,7 +119,6 @@
      
      <xs:complexType name="answerType">
          <xs:attribute name="questionID" type="xs:integer"/>
-         <xs:attribute name="answerID" type="xs:integer"/>
          <xs:attribute name="answerText"/>
          <xs:attribute name="truthValue" type="xs:boolean"/>
      </xs:complexType> 

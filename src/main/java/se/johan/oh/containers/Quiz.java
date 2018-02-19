@@ -1,61 +1,79 @@
 
 package se.johan.oh.containers;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author johan
  */
-public class Quiz {
+public class Quiz implements QuizInterface {
 
-    private int quizID;
-    private int subjectID;
-    private String quizName; 
+    protected int quizID;
+    protected int subjectID;
+    protected String quizName;
     
-    public static final String [] COLUMNS = {"QUIZ_ID","SUBJECT_ID","QUIZ_NAME"};
+    List<Question> questions;
     
-    public static final String CREATE_SQL = "INSERT INTO QUIZ (SUBJECT_ID, QUIZ_NAME) VALUES (?,?)";
-    public static final String READ_BY_SUBJECT_ID_SQL   = "SELECT * FROM QUIZ WHERE SUBJECT_ID = ? " ;
-    public static final String READ_BY_QUIZ_ID = "SELECT * FROM QUIZ WHERE QUIZ_ID = ?";
-    public static final String READ_ALL_SQL = "SELECT * FROM QUIZ";
-    public static final String UPDATE_SQL = "UPDATE QUIZ SET SUBJECT_ID = ?, QUIZ_NAME = ? WHERE QUIZ_ID = ?";
-    public static final String DELETE_SQL = " DELETE FROM QUIZ WHERE QUIZ_ID = ?";
-    public static final String DELETE_BY_SUBJECT_ID_SQL ="DELETE FROM QUIZ WHERE SUBJECT_ID = ?";
-
     public Quiz(int quizID, int subjectID, String quizName) {
         initQuiz(quizID, subjectID, quizName);
+        this.questions = new LinkedList<>();
     }
     
+    @Override
     public void initQuiz(int quizID, int subjectID, String quizName) {
         this.quizID = quizID;
         this.subjectID = subjectID;
-        this.quizName = quizName;
+        this.quizName = quizName; 
     }
 
+    @Override
     public int getSubjectID() {
         return subjectID;
     }
 
+    @Override
     public void setSubjectID(int subjectID) {
         this.subjectID = subjectID;
     }
 
+    @Override
     public int getQuizID() {
         return quizID;
     }
 
+    @Override
     public void setQuizID(int quizID) {
         this.quizID = quizID;
     }
 
+    @Override
     public String getQuizName() {
         return quizName;
     }
 
+    @Override
     public void setQuizName(String quizName) {
         this.quizName = quizName;
     }
     
+     public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+    
+    public void addQuestion(Question question){
+        questions.add(question);
+    }
+    
+    @Override
     public String toString(){
         return COLUMNS[0]+" : "+quizID+", "+COLUMNS[1]+" : "+subjectID+", "+COLUMNS[2]+" : "+quizName;
     };  
+
+   
 }
 

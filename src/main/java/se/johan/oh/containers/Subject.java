@@ -2,6 +2,8 @@
 package se.johan.oh.containers;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author johan
@@ -20,12 +22,28 @@ public class Subject implements Serializable{
     public static final String DESCRIPTION_HTML = "DESCRIPTION_HTML";
     public static final String SUBJECT_ID="SUBJECT_ID";
     
-    private String descriptionHTML;
-    private String subjectName;
-    private int subjectID;
+    protected String descriptionHTML;
+    protected String subjectName;
+    protected int subjectID;
     
-    public Subject(){ this.subjectID = 0;}
+    List<Chapter>  chapters;
+    List<Quiz> quizzes;
     
+    public Subject(){ this.subjectID = 0; init();}
+    
+    private void init(){
+        chapters = new LinkedList<>();
+        quizzes = new LinkedList<>();
+    }
+
+    public List<Chapter> getChapters() {
+        return chapters;
+    }
+
+    public List<Quiz> getQuizzes() {
+        return quizzes;
+    }
+
     /**
      *
      * @param subjectName
@@ -35,6 +53,7 @@ public class Subject implements Serializable{
         this.descriptionHTML = descriptionHTM;
         this.subjectName = subjectName;
         this.subjectID=0;
+        init();
     }
     
     /**
@@ -47,6 +66,23 @@ public class Subject implements Serializable{
         this.descriptionHTML = HTMLContent;
         this.subjectName = subjectName;
         this.subjectID = subjectID;
+        init();
+    }
+    
+    /**
+     * Adds a chapter to the subject
+     * @param chapter to add
+     */
+    public void addChapter(Chapter chapter){
+        chapters.add(chapter);
+    }
+    
+    /**
+     * Adds a quiz to the subject
+     * @param quiz to add
+     */
+    public void add(Quiz quiz){
+        quizzes.add(quiz);
     }
 
     /**
@@ -89,8 +125,7 @@ public class Subject implements Serializable{
     
     @Override
     public String toString(){
-        
-        return subjectName+"\n"+ descriptionHTML+ "\n"+subjectID+"\n";
+        return "Subject ID: "+ subjectID +" Subject name: "+ subjectName+" description HTML: "+ descriptionHTML;
     }
   
 }

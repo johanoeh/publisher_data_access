@@ -1,6 +1,9 @@
 
 package se.johan.oh.containers;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author johan
  */
@@ -18,18 +21,35 @@ public class Question {
     private int QuestionID;
     private int quizID;
     private String questionText;
+    
+    private List<Answer> answers;
 
     public Question(int QuestionID, int quizID, String questionText) {
         initQuestion(QuestionID, quizID, questionText);
+        answers = new LinkedList<>();
     }
 
     public Question() {
+        answers = new LinkedList<>();
     }
     
+   
     public void initQuestion(int QuestionID, int quizID, String questionText) {
         this.QuestionID = QuestionID;
         this.quizID = quizID;
         this.questionText = questionText;
+    }
+    
+    public void addAnswer(Answer answer){
+        answers.add(answer);
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     /**
