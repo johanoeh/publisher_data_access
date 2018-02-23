@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.johan.oh.xmlparsing;
+package se.johan.oh.xmlhandling;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import se.johan.oh.utils.FileReaderHandler;
  */
 public class ParserHandler {
     
-    XMLDataHandler xMLDataHandler;
+    SubjectXMLDataHandler xMLDataHandler;
     FileReaderHandler fileReaderHandler;
     SAXParserFactory sAXParserFactory;
     
@@ -26,19 +26,20 @@ public class ParserHandler {
      * @param resource
      */
     public ParserHandler(String resource) throws SAXException, ParserConfigurationException, IOException{
+        XMLToRelationalInterface xmlToRelational = new XMLToRelationalHandler();
         fileReaderHandler = new FileReaderHandler(resource);
         sAXParserFactory = SAXParserFactory.newInstance();
         SAXParser sp = sAXParserFactory.newSAXParser();
-        xMLDataHandler = new XMLDataHandler();
+        xMLDataHandler = new SubjectXMLDataHandler(xmlToRelational);
         sp.parse(fileReaderHandler.getInputStream(resource), xMLDataHandler);
+       
     }
     
     /**
      *
      */
     public void parseXML(){
-        
-    
+
     }
    
 }

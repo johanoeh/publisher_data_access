@@ -19,9 +19,14 @@ import java.util.List;
 public class SubjectDataAccess {
     
     private ChapterDataAccess chapterDAO;
+    private ConnectionHandlerInterface connectionHandler;
     
     public SubjectDataAccess() {
-        this.chapterDAO = new ChapterDataAccess();
+        this.chapterDAO = new ChapterDataAccess(connectionHandler);
+    }
+
+    SubjectDataAccess(ConnectionHandlerInterface connectionHandler) {
+        this.connectionHandler = connectionHandler;
     }
     
     
@@ -32,7 +37,7 @@ public class SubjectDataAccess {
      */
     public List<Subject> readAll() {
         List<Subject> subjects = new ArrayList<>();
-        try (Connection connection = ConnectionHelper.getConnection()){
+        try (Connection connection = connectionHandler.getConnection()){
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(Subject.SELECT_SUBJECTS_SQL);
             while (resultSet.next()) {
@@ -56,7 +61,7 @@ public class SubjectDataAccess {
      */
     public Subject read(int id){
         Subject subject = null;
-        try (Connection connection = ConnectionHelper.getConnection()){
+        try (Connection connection = connectionHandler.getConnection()){
             PreparedStatement preparedStatement =  connection.prepareStatement(Subject.SELECT_SUBJECT_SQL);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -80,7 +85,7 @@ public class SubjectDataAccess {
      */
     public int create(Subject subject) {
         int insertedKey = -1;
-        try (Connection connection = ConnectionHelper.getConnection()) { 
+        try (Connection connection = connectionHandler.getConnection()) { 
             PreparedStatement preparedStatement
                     = connection.prepareStatement(Subject.INSERT_SUBJECT_SQL,Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, subject.getSubjectName());
@@ -101,7 +106,7 @@ public class SubjectDataAccess {
      * @param subjectID id of subject to delete
      */
     public void delete(int subjectID){
-        try (Connection connection = ConnectionHelper.getConnection()){  
+        try (Connection connection = connectionHandler.getConnection()){  
             List<Chapter> chapters = chapterDAO.readAll(subjectID);
             PreparedStatement preparedStatement = connection.prepareStatement(Subject.DELETE_FROM_SUBJECT_HAS_CHAPTERS_SQL);
             preparedStatement.setInt(1, subjectID);

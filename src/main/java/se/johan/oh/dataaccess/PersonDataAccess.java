@@ -16,13 +16,18 @@ import java.util.List;
  * @author johan
  */
 public class PersonDataAccess {
+    
+    ConnectionHandlerInterface connectionHandler;
+    public PersonDataAccess(ConnectionHandlerInterface connectionHandler){
+        this.connectionHandler = connectionHandler;
+    }
 
     /**
      * @param person to create
      */
     public int create(Person person) {
         int id = -1;
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement preparedStatement
                     = connection.prepareStatement(Person.INSERT_PERSONAL_INFO_SQL,Statement.RETURN_GENERATED_KEYS);
             prepare(preparedStatement, person, false);
@@ -42,7 +47,7 @@ public class PersonDataAccess {
      * @param userID
      */
     public void delete(int userID){
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(Person.DELETE_PERSONAL_INFO_SQL);
             preparedStatement.setInt(1, userID);
             preparedStatement.executeUpdate();
@@ -56,7 +61,7 @@ public class PersonDataAccess {
      * @param person
      */
     public void update(Person person){
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement preparedStatement
                     = connection.prepareStatement(Person.UPDATE_PERSONAL_INFO_SQL);
             prepare(preparedStatement, person, true);
@@ -73,7 +78,7 @@ public class PersonDataAccess {
      */
     public List<Person> readAll(){
         List<Person> persons = new ArrayList<>();
-        try (Connection conn = ConnectionHelper.getConnection()) {
+        try (Connection conn = connectionHandler.getConnection()) {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(Person.SELECT_PERSONAL_INFO_SQL);
             String[] columns = Person.COLUMNS;
@@ -94,7 +99,7 @@ public class PersonDataAccess {
      */
     public Person read(int userID){
         Person person = null;
-        try (Connection conn = ConnectionHelper.getConnection()) {          
+        try (Connection conn = connectionHandler.getConnection()) {          
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(Person.SELECT_PERSONAL_INFO_SQL);
             while (rs.next()) {

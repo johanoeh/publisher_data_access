@@ -20,12 +20,18 @@ import java.util.List;
  */
 public class UsersDataAccess {
     
+     ConnectionHandlerInterface connectionHandler;
+
+    UsersDataAccess(ConnectionHandlerInterface connectionHandler) {
+        this.connectionHandler = connectionHandler;
+    }
+    
     /**
      * @param user
      */
     public int create(User user){
         int id = -1;
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement preparedStatement
                     = connection.prepareStatement(User.CREATE_USER_SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user.getUserName());
@@ -48,7 +54,7 @@ public class UsersDataAccess {
      * @param userID
      */
     public void delete(int userID) {
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(User.DELETE_USER_SQL);
             preparedStatement.setInt(1, userID);
             preparedStatement.executeUpdate();
@@ -62,7 +68,7 @@ public class UsersDataAccess {
      * @param user
      */
     public void update(User user){
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
            
             PreparedStatement preparedStatement = 
                     connection.prepareStatement(User.UPDATE_USER_SQL);
@@ -80,7 +86,7 @@ public class UsersDataAccess {
      */
     public List<User> readAll(){
         List<User> users = new ArrayList<>();
-        try(Connection conn = ConnectionHelper.getConnection()) {
+        try(Connection conn = connectionHandler.getConnection()) {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(User.READ_ALL_USER_SQL);
             String [] columns = User.COLUMNS;
@@ -104,7 +110,7 @@ public class UsersDataAccess {
      */
     public User read(int userID) {
        User user = null;
-        try(Connection conn = ConnectionHelper.getConnection()) {
+        try(Connection conn = connectionHandler.getConnection()) {
            
             PreparedStatement preparedStatement = conn.prepareStatement(User.READ_USER_SQL);
             preparedStatement.setInt(1, userID);

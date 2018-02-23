@@ -29,7 +29,9 @@ public class Subject implements Serializable{
     List<Chapter>  chapters;
     List<Quiz> quizzes;
     
-    public Subject(){ this.subjectID = 0; init();}
+    public Subject(){ 
+        this.subjectID = 0; init();
+    }
     
     private void init(){
         chapters = new LinkedList<>();

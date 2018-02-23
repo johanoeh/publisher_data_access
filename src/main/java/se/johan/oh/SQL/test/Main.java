@@ -5,12 +5,14 @@
  */
 package se.johan.oh.SQL.test;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
+import java.sql.Connection;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import se.johan.oh.utils.FileReaderHandler;
-import se.johan.oh.xmlparsing.ParserHandler;
+import se.johan.oh.dataaccess.ConnectionHandler;
+import se.johan.oh.xmlhandling.ParserHandler;
+
 
 /**
  *
@@ -20,11 +22,21 @@ public class Main {
 
     /**
      * @param args the command line arguments
-     * @throws java.lang.Exception
+     * @throws org.xml.sax.SAXException
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws java.io.IOException
      */
-    public static void main(String[] args) throws SAXException, ParserConfigurationException, IOException{
-    String resource ="file/test.xml";
-    ParserHandler parserHandler = new ParserHandler(resource);
+    public static void main(String[] args) throws SAXException, ParserConfigurationException, IOException {
+        
+        String resource ="file/test.xml";
+        ParserHandler parserHandler = new ParserHandler(resource);
+        
+        /*ConnectionHandler connectionManager = new ConnectionHandler(
+                "org.apache.derby.jdbc.ClientDriver",
+                "jdbc:derby://localhost:1527/test;create=true",
+                "admin", 
+                "1234");
+        Connection connection = connectionManager.getConnection();*/
     }
 
 }

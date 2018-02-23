@@ -18,6 +18,12 @@ import java.util.logging.Logger;
  * @author johan
  */
 public class QuestionDataAccess {
+
+    private  ConnectionHandlerInterface connectionHandler;
+
+    QuestionDataAccess(ConnectionHandlerInterface connectionHandler) {
+      this.connectionHandler = connectionHandler;
+    }
     
     
     public int create(Question question) {
@@ -31,7 +37,7 @@ public class QuestionDataAccess {
      */
     public List<Question> readByQuizID(int quizID){
         List<Question> questions = new LinkedList<>();
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement prepareStatement = connection.prepareStatement(Question.READ_BY_QUIZ_ID_SQL);
             prepareStatement.setInt(1, quizID);
             ResultSet rs = prepareStatement.executeQuery();
@@ -56,7 +62,7 @@ public class QuestionDataAccess {
     
     private int prepareUpdate(Question question, String sql, boolean isUpdate){
         int id = -1;
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement prepareStatement = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             prepareStatement.setInt(1, question.getQuizID());
             prepareStatement.setString(2, question.getQuestionText());
@@ -79,7 +85,7 @@ public class QuestionDataAccess {
     }
     
     void deleteByQuizID(int quizID) throws SQLException {
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement prepareStatement = connection.prepareStatement(Question.DELETE_BY_QUIZ_ID_SQL);
             prepareStatement.setInt(1, quizID);
             prepareStatement.executeUpdate();
@@ -89,7 +95,7 @@ public class QuestionDataAccess {
     }
     
     void deleteByQuestionID(int questionID) {
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement prepareStatement = connection.prepareStatement(Question.DELETE_BY_QUESTION_ID_SQL);
             prepareStatement.setInt(1, questionID);
             prepareStatement.executeUpdate();

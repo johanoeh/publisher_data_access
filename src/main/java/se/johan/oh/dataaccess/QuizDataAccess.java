@@ -21,6 +21,10 @@ import java.util.logging.Logger;
  * @author johan
  */
 public class QuizDataAccess {
+    private ConnectionHandlerInterface connectionHandler;
+    QuizDataAccess(ConnectionHandlerInterface connectionHandler) {
+        this.connectionHandler = connectionHandler;
+    }
 
     public int create(Quiz quiz) {
        return prepareAndUpdate(quiz, false, Quiz.CREATE_SQL);
@@ -28,7 +32,7 @@ public class QuizDataAccess {
 
     public Quiz read(int quizID) {
         Quiz quiz = null;
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             // Prepared statement used with parametirized SQL queries
             PreparedStatement prepareStatement
                     = connection.prepareStatement(Quiz.READ_BY_QUIZ_ID);
@@ -52,7 +56,7 @@ public class QuizDataAccess {
     public List<Quiz> readBySubjectID(int subjectID) {
 
         List<Quiz> quizzes = new LinkedList<>();
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             // Prepared statement used with parametirized SQL queries
             PreparedStatement prepareStatement
                     = connection.prepareStatement(Quiz.READ_BY_SUBJECT_ID_SQL);
@@ -79,16 +83,16 @@ public class QuizDataAccess {
     }
 
     public void delete(int quizID) {
-        ConnectionHelper.delete(quizID, Quiz.DELETE_BY_SUBJECT_ID_SQL);
+        connectionHandler.delete(quizID, Quiz.DELETE_BY_SUBJECT_ID_SQL);
     }
 
     public void deleteBySubjectID(int subjectID) {
-        ConnectionHelper.delete(subjectID, Quiz.DELETE_BY_SUBJECT_ID_SQL);
+        connectionHandler.delete(subjectID, Quiz.DELETE_BY_SUBJECT_ID_SQL);
     }
 
     private int prepareAndUpdate(Quiz quiz, boolean isUpdate, String sql) {
         int id = -1;
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement prepareStatement;
             prepareStatement = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             prepareStatement.setInt(1, quiz.getSubjectID());

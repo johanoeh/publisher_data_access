@@ -1,5 +1,5 @@
 
-package se.johan.oh.xmlparsing;
+package se.johan.oh.xmlhandling;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +18,7 @@ import se.johan.oh.xmlparsing.XMLcontainers.SimpleXMLElement;
 /**
  * @author johan
  */
-public class XMLDataHandler extends DefaultHandler {
+public class SubjectXMLDataHandler extends DefaultHandler {
 
     public static final String NAME_SPACE = "ns1:";
     public static final String DB = NAME_SPACE + "db";
@@ -33,30 +33,24 @@ public class XMLDataHandler extends DefaultHandler {
     public static final String ANSWER = NAME_SPACE + "answer";
 
     private String DBName = "";
-
-   
-
     private boolean bDescriptionHTML;
-    private boolean bChapter;
     private boolean bContentHTML;
-    private boolean bQuiz;
-    private boolean bQuestion;
-    private boolean bAnswer;
+
 
     private SimpleXMLElement contentHTML = null;
-    List<SimpleXMLElement> elements;
+
     
     private Subject currentSubject;
     private Chapter currentChapter;
     private Quiz currentQuiz;
     private Question currentQuestion;
     private SimpleXMLElement currenSubjectXHTML;
-    private List<Subject> subjects;
-   
-
-    public XMLDataHandler() {
-        elements = new LinkedList<>();
+    private final List<Subject> subjects;
+    private XMLToRelationalInterface xmlToRelationalHandler;
+    
+    public SubjectXMLDataHandler(XMLToRelationalInterface xmlToRelationalHandler) {
         subjects = new LinkedList<>();
+        this.xmlToRelationalHandler = xmlToRelationalHandler;
     }
 
     @Override
@@ -70,29 +64,29 @@ public class XMLDataHandler extends DefaultHandler {
             String qName,
             Attributes atts
     ) throws SAXException {
-
         qName = qName.toLowerCase();
         switch (qName) {
             case DB:
                 DBName = atts.getValue(3);
+                xmlToRelationalHandler.createDB(DBName);
                 break;
             case PERSON:
                 Person person = XMLParseUtils.createPerson(atts);
-                System.out.println(person.toString());
+                xmlToRelationalHandler.create(person);
                 break;
             case USER:
                 User user = XMLParseUtils.createUser(atts);
-                System.out.println(user.toString());
+                xmlToRelationalHandler.create(user);
                 break;
             case SUBJECT:
-                currentSubject = XMLParseUtils.createSubject(atts); 
+                currentSubject = XMLParseUtils.createSubject(atts);
+                xmlToRelationalHandler.create(currentSubject);
                 break;
             case DESCRIPTION_HTML:
                 bDescriptionHTML = true;
                 currenSubjectXHTML = new SimpleXMLElement(DESCRIPTION_HTML);
                 break;
             case CHAPTER:
-                bChapter = true;
                 currentChapter = XMLParseUtils.createChapter(atts);
                 currentSubject.addChapter(currentChapter);
                 break;
@@ -101,18 +95,17 @@ public class XMLDataHandler extends DefaultHandler {
                 contentHTML = new SimpleXMLElement(CONTENT_HTML);    
                 break;
             case QUIZ:
-                bQuiz = true;
                 currentQuiz = XMLParseUtils.createQuiz(atts);
+                xmlToRelationalHandler.create(currentQuiz);
                 break;
             case QUESTION:
-                bQuestion = true;
-                currentQuestion = XMLParseUtils.createQuestion(atts); 
+                currentQuestion = XMLParseUtils.createQuestion(atts);
+                xmlToRelationalHandler.create(currentQuestion);
                 break;
             case ANSWER:
-                bAnswer = true;
-                
                 Answer answer = XMLParseUtils.createAnswer(atts);
-                currentQuestion.addAnswer(XMLParseUtils.createAnswer(atts));
+                //currentQuestion.addAnswer(XMLParseUtils.createAnswer(atts));
+                xmlToRelationalHandler.create(answer);
                 break;
         }
         
@@ -144,31 +137,28 @@ public class XMLDataHandler extends DefaultHandler {
         switch (qName.toLowerCase()) {
             case SUBJECT:
                 currentSubject.setDescriptionHTML(currenSubjectXHTML.toString());
+                xmlToRelationalHandler.create(currentSubject);
                 subjects.add(currentSubject);
             case DESCRIPTION_HTML:
                 bDescriptionHTML = false;
                 break;
             case CHAPTER:
-                bChapter = false;
                 currentChapter.setContentHTML(contentHTML.toString());
                 break;
             case CONTENT_HTML:
                 bContentHTML = false;
                 break;
             case QUIZ:
-                bQuiz = false;
                 currentSubject.add(currentQuiz);
                 break;
             case QUESTION:
-                bQuestion = false;
                 currentQuiz.addQuestion(currentQuestion);
                 break;
             case ANSWER:
-                bAnswer = false;
                 break;
         }
-
-        if (bContentHTML) {
+        
+        if (bContentHTML){
             contentHTML.appendEndTag(qName);
         }
         
@@ -178,14 +168,13 @@ public class XMLDataHandler extends DefaultHandler {
     }
 
     @Override
-    public void endDocument() throws SAXException {
-        //System.out.println(XMLStringBuilder.build(elements));
+    public void endDocument() throws SAXException {   
+       /* System.out.println("!!!! ---- Content received from XML document ---- !!!!");
         for (Subject subject: subjects) {
             System.out.println(subject.toString());   
             for(Chapter chapter : subject.getChapters()){
                 System.out.println(chapter.toString());
-            }
-            
+            }  
             for(Quiz quiz : subject.getQuizzes()){
                 System.out.println(quiz.toString());
                 for(Question question: quiz.getQuestions()){
@@ -194,9 +183,8 @@ public class XMLDataHandler extends DefaultHandler {
                         System.out.println(answer.toString());
                     }
                 }
-            
             }
         }
-       
+     */  
     }
 }

@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package se.johan.oh.xmlparsing;
+
+package se.johan.oh.xmlhandling;
 
 import org.xml.sax.Attributes;
 import se.johan.oh.containers.Answer;
@@ -21,7 +17,14 @@ import se.johan.oh.containers.User;
 public class XMLParseUtils {
 
     /*Methods used to create objects from XML attributes******************************/
+    
     //Chapter(Integer chapterID,int subjectID ,String chapterName, Integer priority, String contentHTML)
+
+    /**
+     * Creates a Chapter object from chapter XML elements attributes
+     * @param atts
+     * @return
+     */
     public static Chapter createChapter(Attributes atts) {
         Chapter chapter = new Chapter(
                 Integer.parseInt(
@@ -34,7 +37,7 @@ public class XMLParseUtils {
     }
 
     /**
-     *
+     *  Creates a Quiz object from quiz XML elements attributes
      * @param atts
      * @return
      */
@@ -48,6 +51,7 @@ public class XMLParseUtils {
     }
 
     /**
+     * creates a User object from xml element users attributes
      * @param atts
      * @return
      */
@@ -62,14 +66,14 @@ public class XMLParseUtils {
     }
 
     /**
-     *
+     * creates a Person from xml element user's attributes
      * @param atts
      * @return
      */
     public static Person createPerson(Attributes atts) {
         Person person
-                = new Person(Integer.parseInt(
-                        atts.getValue("userID")),
+                = new Person(
+                        Integer.parseInt( atts.getValue("userID")),
                         atts.getValue("firstName"),
                         atts.getValue("middleName"),
                         atts.getValue("lastName"),
@@ -82,7 +86,7 @@ public class XMLParseUtils {
     }
 
     /**
-     *
+     * creates a Subject object from XML element subject(s)  attributes
      * @param atts
      * @return
      */
@@ -96,6 +100,12 @@ public class XMLParseUtils {
         return subject;
     }
 
+    /**
+     * creates a string containing all attributes and their values as they are
+     * formatted in an XML document
+     * @param atts
+     * @return
+     */
     public static String buildAttributeString(Attributes atts) {
         String attributeString = " ";
         for (int i = 0; i < atts.getLength(); i++) {
@@ -111,7 +121,11 @@ public class XMLParseUtils {
         return attributeString;
     }
     
-    
+    /**
+     *
+     * @param atts
+     * @return
+     */
     public static Question createQuestion(Attributes atts){
         Question question = new Question(0, 0, atts.getValue("text"));
         return question;
@@ -125,10 +139,6 @@ public class XMLParseUtils {
                 Boolean.parseBoolean(atts.getValue("truthValue"))
         );
         return answer;
-    }
-
-    public static void parse(Attributes atts, String qName) {
-
     }
 
 }

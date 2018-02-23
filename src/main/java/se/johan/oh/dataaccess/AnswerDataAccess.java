@@ -17,6 +17,11 @@ import java.util.logging.Logger;
  */
 public class AnswerDataAccess {
     
+    private ConnectionHandlerInterface connectionHandler;
+
+    public AnswerDataAccess(ConnectionHandlerInterface connectionHandler){
+        this.connectionHandler = connectionHandler;
+    }
     /**
      * @param answer
      * @return 
@@ -31,7 +36,7 @@ public class AnswerDataAccess {
      */
     public List<Answer> readByQuestionID(int questionID){
         List<Answer> answers = new LinkedList<>();
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             // Prepared statement used with parametirized SQL queries
             PreparedStatement prepareStatement
                     = connection.prepareStatement(Answer.READ_BY_QUESTION_ID_SQL);
@@ -67,19 +72,19 @@ public class AnswerDataAccess {
      * @param questionID
      */
     public void deleteByQuestionID(int questionID){
-        ConnectionHelper.delete(questionID, Answer.DELETE_BY_QUESTION_ID);
+        connectionHandler.delete(questionID, Answer.DELETE_BY_QUESTION_ID);
     }
     
     /**
      * @param answerID
      */
     public void deletetByID(int answerID){
-        ConnectionHelper.delete(answerID, Answer.DELETE_BY_ANSWER_ID_SQL);
+        connectionHandler.delete(answerID, Answer.DELETE_BY_ANSWER_ID_SQL);
     }
     
     private int prepareUpdate(Answer answer, String sql, boolean isUpdate) {
          int id =-1;
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement prepareStatement
                     = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             prepareStatement.setInt(1, answer.getQuestionID());
@@ -97,7 +102,6 @@ public class AnswerDataAccess {
         } catch (SQLException ex) {
             Logger.getLogger(AnswerDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return id;
     } 
 }

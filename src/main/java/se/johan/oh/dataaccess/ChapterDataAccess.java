@@ -16,15 +16,20 @@ import java.util.List;
  */
 public class ChapterDataAccess {
     
-  
+    ConnectionHandlerInterface connectionHandler;
+    
+    
+    public ChapterDataAccess(ConnectionHandlerInterface connectionHandler){
+        this.connectionHandler = connectionHandler;
+    }
+    
     /**
      * @param chapter to add
-     * @param subjectID the id of subject chapter belongs to
      * @return  key of inserted value
      */
     public int create(Chapter chapter) {
         int insertedKey = -1;
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement preparedStatement
                     = connection.prepareStatement(Chapter.INSERT_CHAPTER_SQL,Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1,chapter.getSubjectID());
@@ -49,7 +54,7 @@ public class ChapterDataAccess {
      */
     public Chapter read(int chapterID){
         Chapter chapter = null;
-        try (Connection connection = ConnectionHelper.getConnection();) {
+        try (Connection connection = connectionHandler.getConnection();) {
             PreparedStatement preparedStatement
                     = connection.prepareStatement(Chapter.SELECT_CHAPTER_SQL);
             preparedStatement.setInt(1, chapterID);
@@ -75,7 +80,7 @@ public class ChapterDataAccess {
      */
     public List<Chapter> readAll(int subjectID) {
         List<Chapter> chapters = new ArrayList<>();
-        try (Connection connection = ConnectionHelper.getConnection();) {
+        try (Connection connection = connectionHandler.getConnection();) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(Chapter.SELECT_ALL_CHAPTERS_SQL);
             while (resultSet.next()) {
@@ -100,7 +105,7 @@ public class ChapterDataAccess {
      * @param chapter
      */
     public void update(int chapterID, Chapter chapter) {
-        try (Connection connection = ConnectionHelper.getConnection()) {
+        try (Connection connection = connectionHandler.getConnection()) {
             PreparedStatement preparedStatement
                     = connection.prepareStatement(Chapter.UPDATE_CHAPTER_SQL);
             preparedStatement.setString(1, chapter.getChapterName());
@@ -118,7 +123,7 @@ public class ChapterDataAccess {
      * @param chapterID
      */
     public void delete(int chapterID){
-        ConnectionHelper.delete(chapterID, Chapter.DELETE_CHAPTER_SQL);
+        connectionHandler.delete(chapterID, Chapter.DELETE_CHAPTER_SQL);
     }
   
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.johan.oh.xmlparsing;
+package se.johan.oh.xmlhandling;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,7 @@ import se.johan.oh.xmlparsing.XMLcontainers.SimpleXMLElement;
  *
  * @author johan
  */
-public class XMLStringBuilder {
+public class XMLStringHandler {
 
     public static String build(List<SimpleXMLElement> elements){
         String xmlString="";
@@ -23,6 +23,11 @@ public class XMLStringBuilder {
         return xmlString;
     }
     
+    /**
+     *
+     * @param element
+     * @return
+     */
     public static String build(SimpleXMLElement element) {
         String xmlString = "";
         xmlString += "<" + element.getTagName();
@@ -42,7 +47,12 @@ public class XMLStringBuilder {
         return xmlString;
     }
     
-    public static String contentBuild(SimpleXMLElement element) {
+    /**
+     * builds an xml string of the child elements of SimpleXMLElement
+     * @param element
+     * @return
+     */
+    public static String childContentBuild(SimpleXMLElement element) {
         String xmlString = "";
         List<String> content = element.getContent();
         for (String string : content) {

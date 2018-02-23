@@ -115,4 +115,8 @@ public class Chapter {
     public int getSubjectID() {
         return subjectID;
     }
+    
+    public void setSubjectID(int subjectID){
+        this.subjectID = subjectID;
+    }
 }
