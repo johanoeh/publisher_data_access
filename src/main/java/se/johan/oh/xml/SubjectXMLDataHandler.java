@@ -1,6 +1,8 @@
 
-package se.johan.oh.xmlhandling;
+package se.johan.oh.xml;
 
+import se.johan.oh.xml.utils.XMLToRelationalInterface;
+import se.johan.oh.xml.utils.SaxAttributeHandler;
 import java.util.LinkedList;
 import java.util.List;
 import org.xml.sax.Attributes;
@@ -71,15 +73,15 @@ public class SubjectXMLDataHandler extends DefaultHandler {
                 xmlToRelationalHandler.createDB(DBName);
                 break;
             case PERSON:
-                Person person = XMLParseUtils.createPerson(atts);
+                Person person = SaxAttributeHandler.createPerson(atts);
                 xmlToRelationalHandler.create(person);
                 break;
             case USER:
-                User user = XMLParseUtils.createUser(atts);
+                User user = SaxAttributeHandler.createUser(atts);
                 xmlToRelationalHandler.create(user);
                 break;
             case SUBJECT:
-                currentSubject = XMLParseUtils.createSubject(atts);
+                currentSubject = SaxAttributeHandler.createSubject(atts);
                 xmlToRelationalHandler.create(currentSubject);
                 break;
             case DESCRIPTION_HTML:
@@ -87,7 +89,7 @@ public class SubjectXMLDataHandler extends DefaultHandler {
                 currenSubjectXHTML = new SimpleXMLElement(DESCRIPTION_HTML);
                 break;
             case CHAPTER:
-                currentChapter = XMLParseUtils.createChapter(atts);
+                currentChapter = SaxAttributeHandler.createChapter(atts);
                 currentSubject.addChapter(currentChapter);
                 break;
             case CONTENT_HTML:
@@ -95,26 +97,26 @@ public class SubjectXMLDataHandler extends DefaultHandler {
                 contentHTML = new SimpleXMLElement(CONTENT_HTML);    
                 break;
             case QUIZ:
-                currentQuiz = XMLParseUtils.createQuiz(atts);
+                currentQuiz = SaxAttributeHandler.createQuiz(atts);
                 xmlToRelationalHandler.create(currentQuiz);
                 break;
             case QUESTION:
-                currentQuestion = XMLParseUtils.createQuestion(atts);
+                currentQuestion = SaxAttributeHandler.createQuestion(atts);
                 xmlToRelationalHandler.create(currentQuestion);
                 break;
             case ANSWER:
-                Answer answer = XMLParseUtils.createAnswer(atts);
-                //currentQuestion.addAnswer(XMLParseUtils.createAnswer(atts));
+                Answer answer = SaxAttributeHandler.createAnswer(atts);
+                //currentQuestion.addAnswer(SaxAttributeHandler.createAnswer(atts));
                 xmlToRelationalHandler.create(answer);
                 break;
         }
         
         if (bContentHTML && !qName.equalsIgnoreCase(CONTENT_HTML)) {
-            String xmlPart = qName + XMLParseUtils.buildAttributeString(atts);
+            String xmlPart = qName + SaxAttributeHandler.buildAttributeString(atts);
             contentHTML.appendStartTag(xmlPart);
         } 
         if (bDescriptionHTML && !qName.equalsIgnoreCase(DESCRIPTION_HTML)){
-            String xmlPart = qName + XMLParseUtils.buildAttributeString(atts);
+            String xmlPart = qName + SaxAttributeHandler.buildAttributeString(atts);
             currenSubjectXHTML.appendStartTag(xmlPart);  
         }
     }

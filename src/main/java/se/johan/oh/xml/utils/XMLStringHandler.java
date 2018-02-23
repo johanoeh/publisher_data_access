@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.johan.oh.xmlhandling;
+package se.johan.oh.xml.utils;
 
 import java.util.List;
 import java.util.Map;

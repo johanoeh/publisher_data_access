@@ -1,6 +1,7 @@
 
-package se.johan.oh.xmlhandling;
+package se.johan.oh.xml.utils;
 
+import se.johan.oh.xml.utils.XMLToRelationalInterface;
 import se.johan.oh.containers.*;
 import se.johan.oh.dataaccess.DataAccessFacade;
 import se.johan.oh.dataaccess.DataAccessInterface;

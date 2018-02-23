@@ -11,7 +11,7 @@ import java.sql.Connection;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import se.johan.oh.connection.ConnectionHandler;
-import se.johan.oh.xmlhandling.ParserHandler;
+import se.johan.oh.xml.SaxParserHandler;
 
 
 /**
@@ -29,7 +29,7 @@ public class Main {
     public static void main(String[] args) throws SAXException, ParserConfigurationException, IOException {
         
         String resource ="file/test.xml";
-        ParserHandler parserHandler = new ParserHandler(resource);
+        SaxParserHandler parserHandler = new SaxParserHandler(resource);
         
         /*ConnectionHandler connectionManager = new ConnectionHandler(
                 "org.apache.derby.jdbc.ClientDriver",

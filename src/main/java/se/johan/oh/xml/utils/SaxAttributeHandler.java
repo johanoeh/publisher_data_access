@@ -1,5 +1,5 @@
 
-package se.johan.oh.xmlhandling;
+package se.johan.oh.xml.utils;
 
 import org.xml.sax.Attributes;
 import se.johan.oh.containers.Answer;
@@ -14,7 +14,7 @@ import se.johan.oh.containers.User;
  *
  * @author johan
  */
-public class XMLParseUtils {
+public class SaxAttributeHandler {
 
     /*Methods used to create objects from XML attributes******************************/
     

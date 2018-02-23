@@ -17,7 +17,8 @@ import java.util.List;
  */
 public class UsersDataAccess {
     
-    ConnectionHandlerInterface connectionHandler;
+    private ConnectionHandlerInterface connectionHandler;
+    
     UsersDataAccess(ConnectionHandlerInterface connectionHandler){
         this.connectionHandler = connectionHandler;
     }
