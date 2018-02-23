@@ -7,7 +7,6 @@ package se.johan.oh.xml.utils;
 
 import java.util.List;
 import java.util.Map;
-import se.johan.oh.xmlparsing.XMLcontainers.SimpleXMLElement;
 
 /**
  *

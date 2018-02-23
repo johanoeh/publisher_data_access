@@ -15,7 +15,7 @@ import se.johan.oh.containers.Question;
 import se.johan.oh.containers.Quiz;
 import se.johan.oh.containers.Subject;
 import se.johan.oh.containers.User;
-import se.johan.oh.xmlparsing.XMLcontainers.SimpleXMLElement;
+import se.johan.oh.xml.utils.SimpleXMLElement;
 
 /**
  * @author johan
