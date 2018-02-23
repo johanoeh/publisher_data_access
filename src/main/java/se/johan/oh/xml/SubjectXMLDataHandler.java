@@ -1,7 +1,6 @@
 
 package se.johan.oh.xml;
 
-import se.johan.oh.xml.utils.XMLToRelationalInterface;
 import se.johan.oh.xml.utils.SaxAttributeHandler;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +15,7 @@ import se.johan.oh.containers.Quiz;
 import se.johan.oh.containers.Subject;
 import se.johan.oh.containers.User;
 import se.johan.oh.xml.utils.SimpleXMLElement;
+import se.johan.oh.xml.utils.DBInterface;
 
 /**
  * @author johan
@@ -48,9 +48,9 @@ public class SubjectXMLDataHandler extends DefaultHandler {
     private Question currentQuestion;
     
     private final List<Subject> subjects;
-    private XMLToRelationalInterface xmlToRelationalHandler;
+    private DBInterface xmlToRelationalHandler;
     
-    public SubjectXMLDataHandler(XMLToRelationalInterface xmlToRelationalHandler) {
+    public SubjectXMLDataHandler(DBInterface xmlToRelationalHandler) {
         subjects = new LinkedList<>();
         this.xmlToRelationalHandler = xmlToRelationalHandler;
     }

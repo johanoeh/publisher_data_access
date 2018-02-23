@@ -10,10 +10,11 @@ import se.johan.oh.containers.Subject;
 import se.johan.oh.containers.User;
 
 /**
- *
+ * Minimal dataccess interface used to create objects and insert them into the 
+ * database
  * @author johan
  */
-public interface XMLToRelationalInterface {
+public interface DBInterface {
 
     /**
      * @param subject
@@ -37,7 +38,6 @@ public interface XMLToRelationalInterface {
     void create(Question question);
 
     /**
-     *
      * @param answer
      */
     void create(Answer answer);

@@ -5,15 +5,16 @@
  */
 package se.johan.oh.xml;
 
-import se.johan.oh.xml.utils.XMLToRelationalHandler;
-import se.johan.oh.xml.utils.XMLToRelationalInterface;
-import java.io.BufferedReader;
+import se.johan.oh.xml.utils.DB;
+
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
+import se.johan.oh.dataaccess.DataAccessFacade;
 import se.johan.oh.utils.FileReaderHandler;
+import se.johan.oh.xml.utils.DBInterface;
 
 /**
  * @author johan
@@ -28,13 +29,12 @@ public class SaxParserHandler {
      * @param resource
      */
     public SaxParserHandler(String resource) throws SAXException, ParserConfigurationException, IOException{
-        XMLToRelationalInterface xmlToRelational = new XMLToRelationalHandler();
+        DBInterface dbInterface = new DB(new DataAccessFacade());
         fileReaderHandler = new FileReaderHandler(resource);
         sAXParserFactory = SAXParserFactory.newInstance();
-        SAXParser sp = sAXParserFactory.newSAXParser();
-        xMLDataHandler = new SubjectXMLDataHandler(xmlToRelational);
-        sp.parse(fileReaderHandler.getInputStream(resource), xMLDataHandler);
-       
+        SAXParser saxParser = sAXParserFactory.newSAXParser();
+        xMLDataHandler = new SubjectXMLDataHandler(dbInterface);
+        saxParser.parse(fileReaderHandler.getInputStream(resource), xMLDataHandler);  
     }
     
     /**

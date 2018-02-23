@@ -1,16 +1,15 @@
 
 package se.johan.oh.xml.utils;
 
-import se.johan.oh.xml.utils.XMLToRelationalInterface;
+
 import se.johan.oh.containers.*;
-import se.johan.oh.dataaccess.DataAccessFacade;
 import se.johan.oh.dataaccess.DataAccessInterface;
 
 
 /**
  * @author johan
  */
-public class XMLToRelationalHandler implements XMLToRelationalInterface {
+public class DB implements DBInterface {
   
     private int currentSubjectID;
     private int currentQuizID;
@@ -18,8 +17,9 @@ public class XMLToRelationalHandler implements XMLToRelationalInterface {
     private final DataAccessInterface dao;
     private String dbName;
     
-    public XMLToRelationalHandler(){
-        dao = new DataAccessFacade();
+
+    public DB(DataAccessInterface dataAccessInterface) {
+        this.dao = dataAccessInterface;
     }
 
     @Override
@@ -78,10 +78,20 @@ public class XMLToRelationalHandler implements XMLToRelationalInterface {
         dao.create(answer);
     }
 
+    /**
+     *
+     * @param person
+     */
+    @Override
     public void create(Person person) {
        dao.create(person);
     }
 
+    /**
+     *
+     * @param user
+     */
+    @Override
     public void create(User user) {
       dao.create(user);
     } 
