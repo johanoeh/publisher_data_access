@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.johan.oh.SQL.test;
+package se.johan.oh.test;
 
 import se.johan.oh.containers.Answer;
 import se.johan.oh.containers.Chapter;

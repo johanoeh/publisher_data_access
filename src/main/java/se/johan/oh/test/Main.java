@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.johan.oh.SQL.test;
+package se.johan.oh.test;
 
 
 import java.io.IOException;
 import java.sql.Connection;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import se.johan.oh.dataaccess.ConnectionHandler;
+import se.johan.oh.connection.ConnectionHandler;
 import se.johan.oh.xmlhandling.ParserHandler;
 
 

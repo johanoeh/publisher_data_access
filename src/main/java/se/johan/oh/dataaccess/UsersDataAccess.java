@@ -2,6 +2,7 @@
 package se.johan.oh.dataaccess;
 
 
+import se.johan.oh.connection.ConnectionHandlerInterface;
 import se.johan.oh.containers.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

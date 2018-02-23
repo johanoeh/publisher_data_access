@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.johan.oh.dataaccess;
+package se.johan.oh.connection;
 
 import java.sql.Connection;
 
