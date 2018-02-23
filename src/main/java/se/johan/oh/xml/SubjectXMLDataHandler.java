@@ -39,14 +39,14 @@ public class SubjectXMLDataHandler extends DefaultHandler {
     private boolean bContentHTML;
 
 
-    private SimpleXMLElement contentHTML = null;
-
+    private SimpleXMLElement currentChapterHTML = null;
+    private SimpleXMLElement currenSubjectXHTML;
     
     private Subject currentSubject;
     private Chapter currentChapter;
     private Quiz currentQuiz;
     private Question currentQuestion;
-    private SimpleXMLElement currenSubjectXHTML;
+    
     private final List<Subject> subjects;
     private XMLToRelationalInterface xmlToRelationalHandler;
     
@@ -59,6 +59,18 @@ public class SubjectXMLDataHandler extends DefaultHandler {
     public void startDocument() throws SAXException {
     }
 
+    
+    
+    /**
+     * Handles the event of a XML startelement <element name>
+     * Attributes are handled here as well
+     * 
+     * @param namespaceURI
+     * @param localName
+     * @param qName
+     * @param atts
+     * @throws org.xml.sax.SAXException
+     */
     @Override
     public void startElement(
             String namespaceURI,
@@ -69,7 +81,7 @@ public class SubjectXMLDataHandler extends DefaultHandler {
         qName = qName.toLowerCase();
         switch (qName) {
             case DB:
-                DBName = atts.getValue(3);
+                DBName = SaxAttributeHandler.getDBName(atts);
                 xmlToRelationalHandler.createDB(DBName);
                 break;
             case PERSON:
@@ -94,7 +106,7 @@ public class SubjectXMLDataHandler extends DefaultHandler {
                 break;
             case CONTENT_HTML:
                 bContentHTML = true;
-                contentHTML = new SimpleXMLElement(CONTENT_HTML);    
+                currentChapterHTML = new SimpleXMLElement(CONTENT_HTML);    
                 break;
             case QUIZ:
                 currentQuiz = SaxAttributeHandler.createQuiz(atts);
@@ -113,7 +125,7 @@ public class SubjectXMLDataHandler extends DefaultHandler {
         
         if (bContentHTML && !qName.equalsIgnoreCase(CONTENT_HTML)) {
             String xmlPart = qName + SaxAttributeHandler.buildAttributeString(atts);
-            contentHTML.appendStartTag(xmlPart);
+            currentChapterHTML.appendStartTag(xmlPart);
         } 
         if (bDescriptionHTML && !qName.equalsIgnoreCase(DESCRIPTION_HTML)){
             String xmlPart = qName + SaxAttributeHandler.buildAttributeString(atts);
@@ -129,7 +141,7 @@ public class SubjectXMLDataHandler extends DefaultHandler {
             currenSubjectXHTML.append(new String(ch, start, length));
         }
         if (bContentHTML) {
-            contentHTML.append(new String(ch, start, length));
+            currentChapterHTML.append(new String(ch, start, length));
         }
     }
 
@@ -145,7 +157,7 @@ public class SubjectXMLDataHandler extends DefaultHandler {
                 bDescriptionHTML = false;
                 break;
             case CHAPTER:
-                currentChapter.setContentHTML(contentHTML.toString());
+                currentChapter.setContentHTML(currentChapterHTML.toString());
                 break;
             case CONTENT_HTML:
                 bContentHTML = false;
@@ -161,7 +173,7 @@ public class SubjectXMLDataHandler extends DefaultHandler {
         }
         
         if (bContentHTML){
-            contentHTML.appendEndTag(qName);
+            currentChapterHTML.appendEndTag(qName);
         }
         
         if(bDescriptionHTML){

@@ -11,14 +11,11 @@ import se.johan.oh.containers.Subject;
 import se.johan.oh.containers.User;
 
 /**
- *
+ * Class used to create java objects from XML elements attributes
  * @author johan
  */
 public class SaxAttributeHandler {
 
-    /*Methods used to create objects from XML attributes******************************/
-    
-    //Chapter(Integer chapterID,int subjectID ,String chapterName, Integer priority, String contentHTML)
 
     /**
      * Creates a Chapter object from chapter XML elements attributes
@@ -139,6 +136,10 @@ public class SaxAttributeHandler {
                 Boolean.parseBoolean(atts.getValue("truthValue"))
         );
         return answer;
+    }
+    
+    public static String getDBName(Attributes atts){
+        return atts.getValue("dbName");
     }
 
 }
