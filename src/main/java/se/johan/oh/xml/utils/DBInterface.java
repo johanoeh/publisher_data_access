@@ -10,11 +10,17 @@ import se.johan.oh.containers.Subject;
 import se.johan.oh.containers.User;
 
 /**
- * Minimal dataccess interface used to create objects and insert them into the 
+ * Minimal interface
+ * Should implement methods to create database and methods to add each of the object
+ * as an entry in the database.
  * database
  * @author johan
  */
 public interface DBInterface {
+    
+    void createDB(String dbName);
+    
+    public String getDBName();
 
     /**
      * @param subject
@@ -41,10 +47,6 @@ public interface DBInterface {
      * @param answer
      */
     void create(Answer answer);
-
-    void createDB(String dbName);
-    
-    public String getDBName();
 
     public void create(Person person);
 
