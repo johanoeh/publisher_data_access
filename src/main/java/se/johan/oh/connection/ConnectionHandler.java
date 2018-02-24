@@ -16,15 +16,16 @@ public class ConnectionHandler implements ConnectionHandlerInterface {
 
     private final String driver;
     private final String URL;
+    private String dbName;
     private final String password;
     private final String userName;
     
-    private Connection dbConnection = null;
-    
+    private Connection dbConnection = null;  
     private final static String DB_DRIVER = "org.apache.derby.jdbc.ClientDriver";
     private final static String DB_CONNECTION = "jdbc:derby://localhost:1527/test;create=true";
     private final static String USER ="dbadmin";
     private final static String PASSWORD = "1234";
+
     
 
     /**
@@ -36,6 +37,7 @@ public class ConnectionHandler implements ConnectionHandlerInterface {
      * @param password
      */
     public ConnectionHandler(String driver, String connectionURL, String userName ,String password){
+        this.dbName = dbName;
         this.driver = driver;
         this.URL = connectionURL;
         this.userName = userName;
@@ -55,14 +57,14 @@ public class ConnectionHandler implements ConnectionHandlerInterface {
         try {
             Class.forName(driver);
 
-        } catch (ClassNotFoundException e) {
-            System.err.println(e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConnectionHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             dbConnection = DriverManager.getConnection(URL, userName, password);
             return dbConnection;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException ex) {
+              Logger.getLogger(ConnectionHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return dbConnection;
     }
@@ -76,7 +78,7 @@ public class ConnectionHandler implements ConnectionHandlerInterface {
         }
    }
    
-    @Override
+   @Override
    public void delete(int id, String sql) {
        Connection connection = getConnection();
         try {
@@ -87,5 +89,4 @@ public class ConnectionHandler implements ConnectionHandlerInterface {
             Logger.getLogger(QuizDataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 }

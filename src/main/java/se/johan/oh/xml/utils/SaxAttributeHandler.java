@@ -2,6 +2,7 @@
 package se.johan.oh.xml.utils;
 
 import org.xml.sax.Attributes;
+import se.johan.oh.connection.ConnectionInfo;
 import se.johan.oh.containers.Answer;
 import se.johan.oh.containers.Chapter;
 import se.johan.oh.containers.Person;
@@ -15,8 +16,15 @@ import se.johan.oh.containers.User;
  * @author johan
  */
 public class SaxAttributeHandler {
-
-
+    
+    
+    private static final  String URL ="jdbc:derby://localhost:1527/";
+    private static final  String USER_NAME ="admin";
+    private static final  String PASSWORD="1234";
+            
+    public static ConnectionInfo createConnectionInfo(Attributes atts){
+        return new ConnectionInfo(atts.getValue("dbName"), URL, USER_NAME, PASSWORD);
+    }
     /**
      * Creates a Chapter object from chapter XML elements attributes
      * @param atts

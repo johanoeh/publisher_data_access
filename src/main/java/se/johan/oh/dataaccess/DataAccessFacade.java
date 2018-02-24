@@ -26,9 +26,30 @@ public class DataAccessFacade implements DataAccessInterface {
     QuestionDataAccess questionDAO;
     AnswerDataAccess answerDAO;
     ConnectionHandlerInterface connectionHandler;
+    
+    public DataAccessFacade(ConnectionHandlerInterface connectionHandler){
+        this.connectionHandler = connectionHandler;
+        setConnectionHandler(connectionHandler);
+    }
+    
 
     public DataAccessFacade(){
-        this.connectionHandler = new ConnectionHandler();
+        createDB("test");
+        setConnectionHandler(connectionHandler);
+    }
+    
+    @Override
+    public void createDB(String dbName) {
+        connectionHandler = new ConnectionHandler(
+                "org.apache.derby.jdbc.ClientDriver",
+                "jdbc:derby://localhost:1527/" + dbName + ";create=true",
+                "admin",
+                "1234"
+        );
+        setConnectionHandler(connectionHandler);
+    }
+    
+    private void setConnectionHandler(ConnectionHandlerInterface connectionHandler) {
         subjectDAO = new SubjectDataAccess(connectionHandler);
         chapterDAO = new ChapterDataAccess(connectionHandler);
         userDAO = new UsersDataAccess(connectionHandler);
@@ -37,12 +58,12 @@ public class DataAccessFacade implements DataAccessInterface {
         questionDAO = new QuestionDataAccess(connectionHandler);
         answerDAO = new AnswerDataAccess(connectionHandler);
     }
- 
+
     
     /* Access methods for subjects -------------------------------------------*/
+    
     /**
      * Returns a list of all subjects from db
-     *
      * @return
      */
     @Override
@@ -275,8 +296,4 @@ public class DataAccessFacade implements DataAccessInterface {
         answerDAO.deleteByQuestionID(questionID);
     }
 
-    @Override
-    public void createDB(String dbName) {
-       
-    }
 }

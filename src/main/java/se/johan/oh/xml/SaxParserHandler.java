@@ -24,24 +24,29 @@ public class SaxParserHandler {
     SubjectXMLDataHandler xMLDataHandler;
     FileReaderHandler fileReaderHandler;
     SAXParserFactory sAXParserFactory;
+    DBInterface dbInterface;
+    String resource;
+    SAXParser saxParser;
     
     /**
      * @param resource
      */
     public SaxParserHandler(String resource) throws SAXException, ParserConfigurationException, IOException{
-        DBInterface dbInterface = new DB(new DataAccessFacade());
+        this.resource = resource;
         fileReaderHandler = new FileReaderHandler(resource);
         sAXParserFactory = SAXParserFactory.newInstance();
         SAXParser saxParser = sAXParserFactory.newSAXParser();
-        xMLDataHandler = new SubjectXMLDataHandler(dbInterface);
-        saxParser.parse(fileReaderHandler.getInputStream(resource), xMLDataHandler);  
+        xMLDataHandler = new SubjectXMLDataHandler(new DB(new DataAccessFacade()));
+        //saxParser.parse(fileReaderHandler.getInputStream(resource), xMLDataHandler);  
     }
     
     /**
      *
+     * @throws org.xml.sax.SAXException
+     * @throws java.io.IOException
      */
-    public void parseXML(){
-
+    public void parseXML() throws SAXException, IOException{
+        saxParser.parse(fileReaderHandler.getInputStream(resource), xMLDataHandler);  
     }
    
 }
