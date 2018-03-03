@@ -14,11 +14,11 @@ import se.johan.oh.dataaccess.QuizDataAccess;
  */
 public class ConnectionHandler implements ConnectionHandlerInterface {
 
-    private final String driver;
-    private final String URL;
-    private String dbName;
-    private final String password;
-    private final String userName;
+    private  String driver;
+    private  String URL;
+    private  String dbName;
+    private  String password;
+    private  String userName;
     
     private Connection dbConnection = null;  
     private final static String DB_DRIVER = "org.apache.derby.jdbc.ClientDriver";
@@ -37,18 +37,22 @@ public class ConnectionHandler implements ConnectionHandlerInterface {
      * @param password
      */
     public ConnectionHandler(String driver, String connectionURL, String userName ,String password){
-        this.dbName = dbName;
         this.driver = driver;
         this.URL = connectionURL;
         this.userName = userName;
         this.password = password;
     }
-    
+    /*
     public ConnectionHandler(){
         this.driver = DB_DRIVER;
         this.URL = DB_CONNECTION;
         this.userName = USER;
         this.password = PASSWORD;
+    }*/
+    
+    public ConnectionHandler(String connectionString){
+        this.URL = connectionString;
+        driver = DB_DRIVER;
     }
     
     @Override
@@ -60,8 +64,8 @@ public class ConnectionHandler implements ConnectionHandlerInterface {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectionHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            dbConnection = DriverManager.getConnection(URL, userName, password);
+        try {    
+            dbConnection = DriverManager.getConnection(URL);
             return dbConnection;
         } catch (SQLException ex) {
               Logger.getLogger(ConnectionHandler.class.getName()).log(Level.SEVERE, null, ex);

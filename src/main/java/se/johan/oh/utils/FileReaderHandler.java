@@ -20,13 +20,22 @@ public class FileReaderHandler {
         this.fileName = fileName;          
     }
     
-    
-    public BufferedReader getBufferedReaderV2(String resource){
+    /**
+     *
+     * @param resource
+     * @return
+     */
+    public BufferedReader getBufferedReader(String resource){
         InputStream in = this.getClass().getClassLoader().getResourceAsStream(resource);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
         return bufferedReader;
     }
     
+    /**
+     *
+     * @param resource
+     * @return
+     */
     public InputStream getInputStream(String resource){
          InputStream inputStream = this.getClass().
                  getClassLoader().getResourceAsStream(resource); 

@@ -1,6 +1,7 @@
 
 package se.johan.oh.dataaccess;
 
+import java.sql.Connection;
 import se.johan.oh.connection.ConnectionHandler;
 import se.johan.oh.connection.ConnectionHandlerInterface;
 import se.johan.oh.containers.Answer;
@@ -11,6 +12,7 @@ import se.johan.oh.containers.Question;
 import se.johan.oh.containers.Quiz;
 import se.johan.oh.containers.User;
 import java.util.List;
+import se.johan.oh.SQL.SQLScriptHandler;
 
 
 /**
@@ -18,14 +20,14 @@ import java.util.List;
  */
 public class DataAccessFacade implements DataAccessInterface {
 
-    SubjectDataAccess subjectDAO;
-    ChapterDataAccess chapterDAO;
-    UsersDataAccess userDAO;
-    PersonDataAccess personDAO;
-    QuizDataAccess quizDAO;
-    QuestionDataAccess questionDAO;
-    AnswerDataAccess answerDAO;
-    ConnectionHandlerInterface connectionHandler;
+    private SubjectDataAccess subjectDAO;
+    private ChapterDataAccess chapterDAO;
+    private UsersDataAccess userDAO;
+    private PersonDataAccess personDAO;
+    private QuizDataAccess quizDAO;
+    private QuestionDataAccess questionDAO;
+    private AnswerDataAccess answerDAO;
+    private ConnectionHandlerInterface connectionHandler;
     
     public DataAccessFacade(ConnectionHandlerInterface connectionHandler){
         this.connectionHandler = connectionHandler;
@@ -39,13 +41,16 @@ public class DataAccessFacade implements DataAccessInterface {
     }
     
     @Override
-    public void createDB(String dbName) {
-        connectionHandler = new ConnectionHandler(
-                "org.apache.derby.jdbc.ClientDriver",
-                "jdbc:derby://localhost:1527/" + dbName + ";create=true",
-                "admin",
-                "1234"
-        );
+    public void createDB(String connectionString) {
+        connectionHandler = new ConnectionHandler(connectionString);
+        Connection connection = connectionHandler.getConnection();
+        if(connection == null) 
+            System.out.println("Connection is null !!!");
+        else
+            System.out.println("Connection is not null !!!");
+        
+        SQLScriptHandler sQLScriptHandler = new SQLScriptHandler(connectionString, connectionHandler);
+        sQLScriptHandler.parse();
         setConnectionHandler(connectionHandler);
     }
     

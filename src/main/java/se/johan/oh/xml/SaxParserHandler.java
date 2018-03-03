@@ -29,15 +29,15 @@ public class SaxParserHandler {
     SAXParser saxParser;
     
     /**
-     * @param resource
+     * @param xmlFile
      */
-    public SaxParserHandler(String resource) throws SAXException, ParserConfigurationException, IOException{
-        this.resource = resource;
-        fileReaderHandler = new FileReaderHandler(resource);
+    public SaxParserHandler(String xmlFile) throws SAXException, ParserConfigurationException, IOException{
+        this.resource = xmlFile;
+        fileReaderHandler = new FileReaderHandler(xmlFile);
         sAXParserFactory = SAXParserFactory.newInstance();
-        SAXParser saxParser = sAXParserFactory.newSAXParser();
+        saxParser = sAXParserFactory.newSAXParser();
         xMLDataHandler = new SubjectXMLDataHandler(new DB(new DataAccessFacade()));
-        //saxParser.parse(fileReaderHandler.getInputStream(resource), xMLDataHandler);  
+        //saxParser.parse(fileReaderHandler.getInputStream(xmlFile), xMLDataHandler);  
     }
     
     /**

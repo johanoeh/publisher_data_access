@@ -3,9 +3,25 @@
     xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
     xmlns:ns1='testspace'
     xsi:schemaLocation='testspace test.xsd'
-    dbName="mydb"
+    dbConnectionString="jdbc:derby://localhost:1527/admin;create=true;user=admin;password=1234"
     xmlns:ns2="http://www.w3.org/1999/xhtml"
 >
+    
+    <ns1:user 
+        userID="1"
+        userName="jandoe"
+        password="1234"
+    />
+    <ns1:user 
+        userID="2"
+        userName="johdoe"
+        password="1234"
+    />
+    <ns1:user 
+        userID="3"
+        userName="janban"
+        password="1234"
+    />
     <ns1:person 
             userID="1"
             firstName="jane" 
@@ -17,8 +33,7 @@
             city="Stockholm"
             postalCode="958 58"
    />
-   
-    
+
     <ns1:person 
         userID="2"
         firstName="john" 
@@ -42,25 +57,11 @@
         city="Stockholm"
         postalCode="958 58" />
     
-    <ns1:user 
-        userID="1"
-        userName="jandoe"
-        password="1234"
-    />
-    <ns1:user 
-        userID="2"
-        userName="johdoe"
-        password="1234"
-    />
-    <ns1:user 
-        userID="3"
-        userName="janban"
-        password="1234"
-    />
+
     
     <ns1:subject subjectID="1" subjectName="subject one">
         <ns1:descriptionHTML  xmlns="http://www.w3.org/1999/xhtml" > 
-            <h1 id="test"> Hello kuk </h1>
+            <h1 id="test"> Hello test </h1>
         </ns1:descriptionHTML>
         <ns1:chapter chapterID="1" chapterName="chapter one" priority="1">
              <ns1:contentHTML xmlns="http://www.w3.org/1999/xhtml"> 
@@ -72,7 +73,6 @@
                 <ns1:answer questionID="1" answerID="1" answerText="kan varken cykla" truthValue="true"/>
                 <ns1:answer questionID="1" answerID="2" answerText="kan cykla" truthValue="false"/>
             </ns1:question>
-
         </ns1:quiz>
     </ns1:subject>
     

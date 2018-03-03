@@ -34,7 +34,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>se.johan.oh.SQL.test.Main</mainClass>
+                            <mainClass>se.johan.oh.test.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

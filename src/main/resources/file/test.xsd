@@ -12,15 +12,15 @@
 
     <xs:element name="db">
         <xs:complexType>
-            <xs:sequence>  
+            <xs:sequence>
+                <!--user elements -->
+                <xs:element name="user" type="r:userType" maxOccurs="unbounded"/>  
                 <!-- person elements -->
                 <xs:element name="person" type="r:personType" maxOccurs="unbounded"/>
-                <!--user elements -->
-                <xs:element name="user" type="r:userType" maxOccurs="unbounded"/>
                 <!-- subject element -->
                 <xs:element name="subject" type="r:subjectType" maxOccurs="unbounded" minOccurs="0"/>    
             </xs:sequence>
-            <xs:attribute name="dbName" use="required"/>   
+            <xs:attribute name="dbConnectionString" use="required"/>   
         </xs:complexType>
         
          <!-- keys and references ''''''''''''''''''''''''''''''''''''''''''' -->
@@ -118,6 +118,7 @@
      </xs:complexType>
      
      <xs:complexType name="answerType">
+         <xs:attribute name="answerID" type="xs:integer"/>
          <xs:attribute name="questionID" type="xs:integer"/>
          <xs:attribute name="answerText"/>
          <xs:attribute name="truthValue" type="xs:boolean"/>

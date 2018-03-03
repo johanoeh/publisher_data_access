@@ -2,7 +2,6 @@
 package se.johan.oh.xml.utils;
 
 import org.xml.sax.Attributes;
-import se.johan.oh.connection.ConnectionInfo;
 import se.johan.oh.containers.Answer;
 import se.johan.oh.containers.Chapter;
 import se.johan.oh.containers.Person;
@@ -17,14 +16,45 @@ import se.johan.oh.containers.User;
  */
 public class SaxAttributeHandler {
     
+    public static final String CONNECTION_STRING_ATTRIBUTE = "dbConnectionString";
     
-    private static final  String URL ="jdbc:derby://localhost:1527/";
-    private static final  String USER_NAME ="admin";
-    private static final  String PASSWORD="1234";
-            
-    public static ConnectionInfo createConnectionInfo(Attributes atts){
-        return new ConnectionInfo(atts.getValue("dbName"), URL, USER_NAME, PASSWORD);
-    }
+    public static final String CHAPTER_ID = "chapterID";
+    public static final String CHAPTER_NAME ="chapterName";
+    public static final String PRIORITY ="priority";
+    
+    public static final String QUIZ_ID ="quizID";
+    public static final String QUIZ_NAME = "quizName";
+    
+    public static final String USER_ID = "userID";
+    public static final String USER_NAME = "userName";
+    public static final String PASSWORD = "password";
+    
+
+    public static final String FIRST_NAME = "firstName";
+    public static final String MIDDLE_NAME = "middleName";
+    public static final String LAST_NAME = "lastName";
+    public static final String E_MAIL = "email";
+    public static final String COUNTRY = "country";
+    public static final String STREET_ADDRESS = "streetAddress";
+    public static final String CITY = "city";
+    public static final String POSTAL_CODE  = "postalCode";
+    
+    
+    public static final  String SUBJECT_NAME = "subjectName";
+    public static final String SUBJECT_ID = "subjectID";
+    
+    public static final String TEXT ="text";
+    public static final String ANSWER_ID ="answerID";
+    public static final String QUESTION_ID ="questionID";
+    
+    public static final String ANSWER_TEXT ="answerText";
+    public static String TRUTH_VALUE = "truthValue";
+    
+    
+
+     public static String createConnectionString(Attributes atts){
+         return atts.getValue(CONNECTION_STRING_ATTRIBUTE);
+     }
     /**
      * Creates a Chapter object from chapter XML elements attributes
      * @param atts
@@ -33,9 +63,9 @@ public class SaxAttributeHandler {
     public static Chapter createChapter(Attributes atts) {
         Chapter chapter = new Chapter(
                 Integer.parseInt(
-                        atts.getValue("chapterID")),
-                0, atts.getValue("chapterName"),
-                Integer.parseInt(atts.getValue("priority")),
+                        atts.getValue(CHAPTER_ID)),
+                0, atts.getValue(CHAPTER_NAME),
+                Integer.parseInt(atts.getValue(PRIORITY)),
                 ""
         );
         return chapter;
@@ -48,9 +78,9 @@ public class SaxAttributeHandler {
      */
     public static Quiz createQuiz(Attributes atts) {
         Quiz quiz = new Quiz(
-                Integer.parseInt(atts.getValue("quizID")),
+                Integer.parseInt(atts.getValue(QUIZ_ID)),
                 0,
-                atts.getValue("quizName")
+                atts.getValue(QUIZ_NAME)
         );
         return quiz;
     }
@@ -63,9 +93,9 @@ public class SaxAttributeHandler {
     public static User createUser(Attributes atts) {
         User user
                 = new User(
-                        Integer.parseInt(atts.getValue("userID")),
-                        atts.getValue("userName"),
-                        atts.getValue("password")
+                        Integer.parseInt(atts.getValue(USER_ID)),
+                        atts.getValue(USER_NAME),
+                        atts.getValue(PASSWORD)
                 );
         return user;
     }
@@ -78,18 +108,19 @@ public class SaxAttributeHandler {
     public static Person createPerson(Attributes atts) {
         Person person
                 = new Person(
-                        Integer.parseInt( atts.getValue("userID")),
-                        atts.getValue("firstName"),
-                        atts.getValue("middleName"),
-                        atts.getValue("lastName"),
-                        atts.getValue("email"),
-                        atts.getValue("country"),
-                        atts.getValue("streetAddress"),
-                        atts.getValue("city"),
-                        atts.getValue("postalCode"));
+                        Integer.parseInt(atts.getValue(USER_ID)),
+                        atts.getValue(FIRST_NAME),
+                        atts.getValue(MIDDLE_NAME),
+                        atts.getValue(LAST_NAME),
+                        atts.getValue(E_MAIL),
+                        atts.getValue(COUNTRY),
+                        atts.getValue(STREET_ADDRESS),
+                        atts.getValue(CITY),
+                        atts.getValue(POSTAL_CODE));
         return person;
     }
 
+    
     /**
      * creates a Subject object from XML element subject(s)  attributes
      * @param atts
@@ -98,12 +129,33 @@ public class SaxAttributeHandler {
     public static Subject createSubject(Attributes atts) {
         Subject subject
                 = new Subject(
-                        atts.getValue("subjectName"),
+                        atts.getValue(SUBJECT_NAME),
                         "",
-                        Integer.parseInt(atts.getValue("subjectID"))
+                        Integer.parseInt(atts.getValue(SUBJECT_ID))
                 );
         return subject;
     }
+    
+        
+    /**
+     * @param atts
+     * @return
+     */
+    public static Question createQuestion(Attributes atts){
+        Question question = new Question(0, 0, atts.getValue(TEXT));
+        return question;
+    }
+    
+    public static Answer createAnswer(Attributes atts){
+        Answer answer = new Answer(
+                Integer.parseInt(atts.getValue(ANSWER_ID)),
+                Integer.parseInt(atts.getValue(QUESTION_ID)), 
+                atts.getValue(ANSWER_TEXT),
+                Boolean.parseBoolean(atts.getValue(TRUTH_VALUE))
+        );
+        return answer;
+    }
+    
 
     /**
      * creates a string containing all attributes and their values as they are
@@ -125,29 +177,6 @@ public class SaxAttributeHandler {
         }
         return attributeString;
     }
-    
-    /**
-     *
-     * @param atts
-     * @return
-     */
-    public static Question createQuestion(Attributes atts){
-        Question question = new Question(0, 0, atts.getValue("text"));
-        return question;
-    }
-    
-    public static Answer createAnswer(Attributes atts){
-        Answer answer = new Answer(
-                Integer.parseInt(atts.getValue("answerID")),
-                Integer.parseInt(atts.getValue("questionID")), 
-                atts.getValue("answerText"),
-                Boolean.parseBoolean(atts.getValue("truthValue"))
-        );
-        return answer;
-    }
-    
-    public static String getDBName(Attributes atts){
-        return atts.getValue("dbName");
-    }
+
 
 }

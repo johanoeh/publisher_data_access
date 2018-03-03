@@ -34,7 +34,6 @@ public class SubjectXMLDataHandler extends DefaultHandler {
     public static final String QUESTION = NAME_SPACE + "question";
     public static final String ANSWER = NAME_SPACE + "answer";
 
-    private String DBName = "";
     private boolean bDescriptionHTML;
     private boolean bContentHTML;
 
@@ -48,11 +47,11 @@ public class SubjectXMLDataHandler extends DefaultHandler {
     private Question currentQuestion;
     
     private final List<Subject> subjects;
-    private DBInterface xmlToRelationalHandler;
+    private DBInterface db;
     
-    public SubjectXMLDataHandler(DBInterface xmlToRelationalHandler) {
+    public SubjectXMLDataHandler(DBInterface db) {
         subjects = new LinkedList<>();
-        this.xmlToRelationalHandler = xmlToRelationalHandler;
+        this.db = db;
     }
 
     @Override
@@ -73,28 +72,29 @@ public class SubjectXMLDataHandler extends DefaultHandler {
      */
     @Override
     public void startElement(
+            
             String namespaceURI,
             String localName,
             String qName,
             Attributes atts
+            
     ) throws SAXException {
         qName = qName.toLowerCase();
         switch (qName) {
             case DB:
-                DBName = SaxAttributeHandler.getDBName(atts);
-                xmlToRelationalHandler.createDB(DBName);
+                db.createDB(SaxAttributeHandler.createConnectionString(atts));
                 break;
             case PERSON:
                 Person person = SaxAttributeHandler.createPerson(atts);
-                xmlToRelationalHandler.create(person);
+                db.create(person);
                 break;
             case USER:
                 User user = SaxAttributeHandler.createUser(atts);
-                xmlToRelationalHandler.create(user);
+                db.create(user);
                 break;
             case SUBJECT:
                 currentSubject = SaxAttributeHandler.createSubject(atts);
-                xmlToRelationalHandler.create(currentSubject);
+                db.create(currentSubject);
                 break;
             case DESCRIPTION_HTML:
                 bDescriptionHTML = true;
@@ -110,16 +110,16 @@ public class SubjectXMLDataHandler extends DefaultHandler {
                 break;
             case QUIZ:
                 currentQuiz = SaxAttributeHandler.createQuiz(atts);
-                xmlToRelationalHandler.create(currentQuiz);
+                db.create(currentQuiz);
                 break;
             case QUESTION:
                 currentQuestion = SaxAttributeHandler.createQuestion(atts);
-                xmlToRelationalHandler.create(currentQuestion);
+                db.create(currentQuestion);
                 break;
             case ANSWER:
                 Answer answer = SaxAttributeHandler.createAnswer(atts);
                 //currentQuestion.addAnswer(SaxAttributeHandler.createAnswer(atts));
-                xmlToRelationalHandler.create(answer);
+                db.create(answer);
                 break;
         }
         
@@ -151,7 +151,7 @@ public class SubjectXMLDataHandler extends DefaultHandler {
         switch (qName.toLowerCase()) {
             case SUBJECT:
                 currentSubject.setDescriptionHTML(currenSubjectXHTML.toString());
-                xmlToRelationalHandler.create(currentSubject);
+                db.create(currentSubject);
                 subjects.add(currentSubject);
             case DESCRIPTION_HTML:
                 bDescriptionHTML = false;
