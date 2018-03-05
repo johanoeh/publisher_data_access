@@ -22,7 +22,7 @@ public class ConnectionHandler implements ConnectionHandlerInterface {
     
     private Connection dbConnection = null;  
     private final static String DB_DRIVER = "org.apache.derby.jdbc.ClientDriver";
-    private final static String DB_CONNECTION = "jdbc:derby://localhost:1527/test;create=true";
+    //private final static String DB_CONNECTION = "jdbc:derby://localhost:1527/test;create=true";
     private final static String USER ="dbadmin";
     private final static String PASSWORD = "1234";
 

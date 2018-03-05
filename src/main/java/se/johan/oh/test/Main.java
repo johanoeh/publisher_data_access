@@ -40,10 +40,10 @@ public class Main {
     public static void main(String[] args) throws SAXException, ParserConfigurationException, IOException, SQLException {
         
         String resource ="file/test.xml";
-        //SaxParserHandler parserHandler = new SaxParserHandler(resource);
-        //parserHandler.parseXML();
+        SaxParserHandler parserHandler = new SaxParserHandler(resource);
+        parserHandler.parseXML();
         
-        ConnectionHandler connectionHandler = new ConnectionHandler("jdbc:derby://localhost:1527/admin;create=true;user=admin;password=1234");
+        //ConnectionHandler connectionHandler = new ConnectionHandler("jdbc:derby://localhost:1527/admin;create=true;user=admin;password=1234");
         
 
         /*

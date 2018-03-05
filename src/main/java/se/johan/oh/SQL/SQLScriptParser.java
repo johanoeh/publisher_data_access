@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 /**
  * @author johan
+ * parse slq file containing statements and executes the statements
  */
 public class SQLScriptParser {
 
@@ -18,6 +19,9 @@ public class SQLScriptParser {
         this.executable = executable;
     }
 
+    /**
+     * parses the buffered sql script
+     */
     public void parse() {
         String line = null;
         String statement = "";

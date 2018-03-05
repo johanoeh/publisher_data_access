@@ -28,28 +28,21 @@ public class DataAccessFacade implements DataAccessInterface {
     private QuestionDataAccess questionDAO;
     private AnswerDataAccess answerDAO;
     private ConnectionHandlerInterface connectionHandler;
+    public static final String SQL_FILE ="file/publish_sql.sql";
     
     public DataAccessFacade(ConnectionHandlerInterface connectionHandler){
         this.connectionHandler = connectionHandler;
         setConnectionHandler(connectionHandler);
     }
     
+    public DataAccessFacade(){}
 
-    public DataAccessFacade(){
-        createDB("test");
-        setConnectionHandler(connectionHandler);
-    }
-    
     @Override
     public void createDB(String connectionString) {
+        System.err.println(connectionString);
         connectionHandler = new ConnectionHandler(connectionString);
         Connection connection = connectionHandler.getConnection();
-        if(connection == null) 
-            System.out.println("Connection is null !!!");
-        else
-            System.out.println("Connection is not null !!!");
-        
-        SQLScriptHandler sQLScriptHandler = new SQLScriptHandler(connectionString, connectionHandler);
+        SQLScriptHandler sQLScriptHandler = new SQLScriptHandler(SQL_FILE, connectionHandler);
         sQLScriptHandler.parse();
         setConnectionHandler(connectionHandler);
     }

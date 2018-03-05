@@ -9,6 +9,7 @@ import se.johan.oh.containers.Question;
 import se.johan.oh.containers.Quiz;
 import se.johan.oh.containers.Subject;
 import se.johan.oh.containers.User;
+import se.johan.oh.containers.UserPerson;
 
 /**
  * Class used to create java objects from XML elements attributes
@@ -48,7 +49,7 @@ public class SaxAttributeHandler {
     public static final String QUESTION_ID ="questionID";
     
     public static final String ANSWER_TEXT ="answerText";
-    public static String TRUTH_VALUE = "truthValue";
+    public  static String TRUTH_VALUE = "truthValue";
     
     
 
@@ -69,6 +70,13 @@ public class SaxAttributeHandler {
                 ""
         );
         return chapter;
+    }
+    
+    public static UserPerson createUserPerson(Attributes  atts){
+        UserPerson userPerson = new UserPerson();
+        userPerson.setUser(createUser(atts));
+        userPerson.setPerson(createPerson(atts));
+        return userPerson;
     }
 
     /**

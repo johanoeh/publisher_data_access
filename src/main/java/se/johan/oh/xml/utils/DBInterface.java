@@ -8,6 +8,7 @@ import se.johan.oh.containers.Question;
 import se.johan.oh.containers.Quiz;
 import se.johan.oh.containers.Subject;
 import se.johan.oh.containers.User;
+import se.johan.oh.containers.UserPerson;
 
 /**
  * Minimal interface
@@ -51,5 +52,6 @@ public interface DBInterface {
     public void create(Person person);
 
     public void create(User user);
+    public void create(UserPerson userPerson);
     
 }

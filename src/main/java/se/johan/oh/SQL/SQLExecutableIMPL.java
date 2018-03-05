@@ -12,8 +12,7 @@ import se.johan.oh.connection.ConnectionHandlerInterface;
  * @author johan
  */
 public class SQLExecutableIMPL implements SQLExecutable {
-    
-   
+
    private ConnectionHandlerInterface connectionHandler;
    public SQLExecutableIMPL(ConnectionHandlerInterface connectionHandler){
        this.connectionHandler = connectionHandler;

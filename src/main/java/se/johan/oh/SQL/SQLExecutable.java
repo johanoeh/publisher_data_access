@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.johan.oh.SQL;
 
 /**
- *
+ * interfaces should be implemented so tha execute method executes the sql string
  * @author johan
  */
 public interface SQLExecutable {

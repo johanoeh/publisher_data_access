@@ -9,11 +9,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 import se.johan.oh.containers.Answer;
 import se.johan.oh.containers.Chapter;
-import se.johan.oh.containers.Person;
 import se.johan.oh.containers.Question;
 import se.johan.oh.containers.Quiz;
 import se.johan.oh.containers.Subject;
-import se.johan.oh.containers.User;
+import se.johan.oh.containers.UserPerson;
+import se.johan.oh.xml.utils.DB;
 import se.johan.oh.xml.utils.SimpleXMLElement;
 import se.johan.oh.xml.utils.DBInterface;
 
@@ -46,12 +46,14 @@ public class SubjectXMLDataHandler extends DefaultHandler {
     private Quiz currentQuiz;
     private Question currentQuestion;
     
-    private final List<Subject> subjects;
     private DBInterface db;
     
     public SubjectXMLDataHandler(DBInterface db) {
-        subjects = new LinkedList<>();
         this.db = db;
+    }
+    
+    public SubjectXMLDataHandler(){
+        this.db = new DB();
     }
 
     @Override
@@ -84,13 +86,10 @@ public class SubjectXMLDataHandler extends DefaultHandler {
             case DB:
                 db.createDB(SaxAttributeHandler.createConnectionString(atts));
                 break;
-            case PERSON:
-                Person person = SaxAttributeHandler.createPerson(atts);
-                db.create(person);
-                break;
             case USER:
-                User user = SaxAttributeHandler.createUser(atts);
-                db.create(user);
+                UserPerson userPerson = 
+                        SaxAttributeHandler.createUserPerson(atts);
+                db.create(userPerson);
                 break;
             case SUBJECT:
                 currentSubject = SaxAttributeHandler.createSubject(atts);
@@ -152,7 +151,6 @@ public class SubjectXMLDataHandler extends DefaultHandler {
             case SUBJECT:
                 currentSubject.setDescriptionHTML(currenSubjectXHTML.toString());
                 db.create(currentSubject);
-                subjects.add(currentSubject);
             case DESCRIPTION_HTML:
                 bDescriptionHTML = false;
                 break;

@@ -11,31 +11,20 @@
         userID="1"
         userName="jandoe"
         password="1234"
+        firstName="jane" 
+        middleName="alice"  
+        lastName="doe"
+        email="jane.doe@gmail.com"
+        country="Sweden"
+        streetAddress="old road 5"
+        city="Stockholm"
+        postalCode="958 58"
     />
+    
     <ns1:user 
         userID="2"
         userName="johdoe"
         password="1234"
-    />
-    <ns1:user 
-        userID="3"
-        userName="janban"
-        password="1234"
-    />
-    <ns1:person 
-            userID="1"
-            firstName="jane" 
-            middleName="alice"  
-            lastName="doe"
-            email="jane.doe@gmail.com"
-            country="Sweden"
-            streetAddress="old road 5"
-            city="Stockholm"
-            postalCode="958 58"
-   />
-
-    <ns1:person 
-        userID="2"
         firstName="john" 
         middleName="michael"  
         lastName="doe"
@@ -46,8 +35,10 @@
         postalCode="958 58"
     />
     
-    
-    <ns1:person userID="3"
+    <ns1:user 
+        userID="3"
+        userName="janban"
+        password="1234"
         firstName="jana" 
         middleName="banana"  
         lastName="doe"
@@ -55,9 +46,8 @@
         country="Sweden"
         streetAddress="old road 5"
         city="Stockholm"
-        postalCode="958 58" />
-    
-
+        postalCode="958 58"
+    />
     
     <ns1:subject subjectID="1" subjectName="subject one">
         <ns1:descriptionHTML  xmlns="http://www.w3.org/1999/xhtml" > 

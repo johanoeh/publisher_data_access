@@ -15,8 +15,6 @@
             <xs:sequence>
                 <!--user elements -->
                 <xs:element name="user" type="r:userType" maxOccurs="unbounded"/>  
-                <!-- person elements -->
-                <xs:element name="person" type="r:personType" maxOccurs="unbounded"/>
                 <!-- subject element -->
                 <xs:element name="subject" type="r:subjectType" maxOccurs="unbounded" minOccurs="0"/>    
             </xs:sequence>
@@ -34,12 +32,7 @@
             <xs:selector xpath="r:subject/r:chapter"/>
             <xs:field xpath="@subjectID"/>
         </xs:keyref>
-
-         <xs:keyref name="userRef" refer="r:userIDKey">
-                       <xs:selector xpath="r:user"/>
-                       <xs:field xpath="@userID"/>
-         </xs:keyref> 
-         
+ 
         <xs:key name="userIDKey">
             <xs:selector xpath="r:person"/>
             <xs:field xpath="@userID"/>
@@ -59,9 +52,17 @@
     </xs:complexType>
      
     <xs:complexType name="userType">
-       <xs:attribute name="userID" type="xs:integer" use="required"/>
-       <xs:attribute name="userName" type="xs:string" use="required"/>
-       <xs:attribute name="password" type="xs:string" use="required"/>
+        <xs:attribute name="userID" type="xs:integer" use="required"/>
+        <xs:attribute name="userName" type="xs:string" use="required"/>
+        <xs:attribute name="password" type="xs:string" use="required"/>
+        <xs:attribute name="firstName" type="xs:string" use="required"/>
+        <xs:attribute name="middleName" type="xs:string" use="required"/>
+        <xs:attribute name="lastName" type="xs:string" use="required"/>
+        <xs:attribute name="email" type="xs:string" use="required"/>
+        <xs:attribute name="country" type="xs:string" use="required"/>
+        <xs:attribute name="streetAddress" type="xs:string" use="required"/>
+        <xs:attribute name="city" type="xs:string" use="required"/>
+        <xs:attribute name="postalCode" type="xs:string" use="required"/>
     </xs:complexType>
     
     
