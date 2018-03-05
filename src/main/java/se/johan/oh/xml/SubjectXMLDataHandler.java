@@ -2,8 +2,6 @@
 package se.johan.oh.xml;
 
 import se.johan.oh.xml.utils.SaxAttributeHandler;
-import java.util.LinkedList;
-import java.util.List;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -13,11 +11,13 @@ import se.johan.oh.containers.Question;
 import se.johan.oh.containers.Quiz;
 import se.johan.oh.containers.Subject;
 import se.johan.oh.containers.UserPerson;
-import se.johan.oh.xml.utils.DB;
 import se.johan.oh.xml.utils.SimpleXMLElement;
 import se.johan.oh.xml.utils.DBInterface;
 
 /**
+ * Handler used to parse XML file containing content for a webpage
+ * the XML content is parsed to Java objects which then are inserted into a
+ * database using DBinterface implementation
  * @author johan
  */
 public class SubjectXMLDataHandler extends DefaultHandler {
@@ -45,22 +45,16 @@ public class SubjectXMLDataHandler extends DefaultHandler {
     private Chapter currentChapter;
     private Quiz currentQuiz;
     private Question currentQuestion;
-    
     private DBInterface db;
     
     public SubjectXMLDataHandler(DBInterface db) {
         this.db = db;
-    }
-    
-    public SubjectXMLDataHandler(){
-        this.db = new DB();
     }
 
     @Override
     public void startDocument() throws SAXException {
     }
 
-    
     
     /**
      * Handles the event of a XML startelement <element name>
@@ -180,23 +174,6 @@ public class SubjectXMLDataHandler extends DefaultHandler {
     }
 
     @Override
-    public void endDocument() throws SAXException {   
-       /* System.out.println("!!!! ---- Content received from XML document ---- !!!!");
-        for (Subject subject: subjects) {
-            System.out.println(subject.toString());   
-            for(Chapter chapter : subject.getChapters()){
-                System.out.println(chapter.toString());
-            }  
-            for(Quiz quiz : subject.getQuizzes()){
-                System.out.println(quiz.toString());
-                for(Question question: quiz.getQuestions()){
-                    System.out.println(question.toString());
-                    for(Answer answer : question.getAnswers()){
-                        System.out.println(answer.toString());
-                    }
-                }
-            }
-        }
-     */  
+    public void endDocument() throws SAXException {    
     }
 }

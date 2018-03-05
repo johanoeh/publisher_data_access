@@ -20,138 +20,176 @@ import se.johan.oh.containers.User;
  */
 public interface DataAccessInterface {
 
-    /**
-     * Adds a new subject to db
-     *
-     * @param subject to add
-     */
-    int create(Subject subject);
+   
 
     /*Access methods for chapters --------------------------------------------*/
     /**
      * @param chapter to add
      * @return
      */
-    int create(Chapter chapter);
+    public int create(Chapter chapter);
     
     /**
+     * Reads a chapter based on chapter ID
      * @param chapterID
+     * @return the chapter with id
      */
-    void deleteChapter(int chapterID);
-
-    /* Access methods for users-----------------------------------------------*/
-    /**
-     *
-     * @param user
-     */
-    int create(User user);
-
-    /*Access methods for Person ---------------------------------------------*/
-    int create(Person person);
-
-    /*Access methods for quizzes----------------------------------------------*/
-    int create(Quiz quiz);
-
-    /* Access methods for answers --------------------------------------------*/
-    int create(Answer answer);
-
-    /* Access methods for Questions ------------------------------------------*/
-    int createQuestion(Question question);
-
-    void deleteAnswer(int answerID);
-
-    void deleteAnswerByQuestionID(int questionID);
-
-    void deleteByQuestionID(int questionID);
-
+    public Chapter readChapter(int chapterID);
     
-
-    void deletePerson(Integer id);
-
-    void deleteQuiz(int quizID);
-
-    void deleteQuizBySubjectID(int SubjectID);
-
-    /**
-     * Deletes a subject and all it's related chapters
-     *
-     * @param subjectID id of subject to delete
-     */
-    void deleteSubject(int subjectID);
-
-    /**
-     *
-     * @param userID
-     */
-    void deleteUser(int userID);
-
-    /**
-     *
-     * @param subjectID
-     * @return
-     */
-    List<Chapter> readAllChapters(int subjectID);
-
-    List<Person> readAllPersons();
-
-    /* Access methods for subjects -------------------------------------------*/
-    /**
-     * Returns a list of all subjects from db
-     *
-     * @return
-     */
-    List<Subject> readAllSubjects();
-
-    /**
-     *
-     * @return
-     */
-    List<User> readAllusers();
-
-    List<Answer> readAnswerByQuestionID(int questionID);
-
-    Chapter readChapter(int chapterID);
-
-    Person readPerson(int userID);
-
-    List<Question> readQuestionByQuizID(int quizID);
-
-    List<Quiz> readQuiz(int subjectID);
-
-    /**
-     *
-     * @param id
-     * @return
-     */
-    Subject readSubject(int id);
-
-    /**
-     *
-     * @param userID
-     * @return
-     */
-    User readUser(int userID);
-
-    void update(Quiz quiz);
-
-    void update(Question question);
-
-    void update(Answer answer);
-
     /**
      *
      * @param chapterID
      * @param chapter
      */
-    void updateChapter(int chapterID, Chapter chapter);
+    public void updateChapter(int chapterID, Chapter chapter);
+    
+     /**
+     *
+     * @param subjectID
+     * @return
+     */
+    public List<Chapter> readAllChapters(int subjectID);
+    
+    /**
+     * @param chapterID
+     */
+    public void deleteChapter(int chapterID);
+    
+  
 
-    void updatePerson(Person person);
+    /* Access methods for users ----------------------------------------------*/
+    
+    /**
+     * @param user
+     */
+    public int create(User user);
+    
+    /**
+     * @param userID
+     * @return
+     */
+    public User readUser(int userID);
+    
+    /**
+     * @return
+     */
+    public List<User> readAllusers();
+    
+    /**
+     * @param userID
+     */
+    public void deleteUser(int userID);
+
+    /*Access methods for Person ---------------------------------------------*/
+    
+    public int create(Person person);
+    
+    /**
+     * @param userID
+     * @return
+     */
+    public Person readPerson(int userID);
+    
+    /**
+     * @return
+     */
+    public List<Person> readAllPersons();
+    
+    /**
+     *
+     * @param id
+     */
+    public void deletePerson(Integer id);
+    
+    
+    
+
+    /*Access methods for quiz objects ----------------------------------------*/
+    public int create(Quiz quiz);
+    
+    public List<Quiz> readQuiz(int subjectID);
+
+    public void update(Quiz quiz);
+
+    public void deleteQuiz(int quizID);
+
+    public void deleteQuizBySubjectID(int SubjectID);
+    
+   
+
+   
+
+    /* Access methods for Questions ------------------------------------------*/
+    public int createQuestion(Question question);
+
+    public void deleteByQuestionID(int questionID);
+    
+    /* Access methods for answers --------------------------------------------*/
+    public int create(Answer answer);
+    
+    public List<Answer> readAnswerByQuestionID(int questionID);
+
+    public void update(Answer answer);
+    
+    public void deleteAnswer(int answerID);
+    
+    public void deleteAnswerByQuestionID(int questionID);
+
+
+  
+
+    /* Access methods for subjects -------------------------------------------*/
+    
+    /**
+     * Returns a list of all subjects
+     * @return
+     */
+    public List<Subject> readAllSubjects();
+
+    /**
+     * @param id
+     * @return
+     */
+    public Subject readSubject(int id);
+    
+     /**
+     * Adds a new subject to db
+     * @param subject to add
+     * @return id of created subject
+     */
+     public int create(Subject subject);
+    
+    /**
+     * Deletes a subject and all it's related chapters
+     *
+     * @param subjectID id of subject to delete
+     */
+    public void deleteSubject(int subjectID);
+
+    /**
+     *
+     * @param quizID
+     * @return
+     */
+    public List<Question> readQuestionByQuizID(int quizID);
+
+    /**
+     *
+     * @param question
+     */
+    public void update(Question question);
+
+    /**
+     *
+     * @param person
+     */
+    public void updatePerson(Person person);
 
     /**
      *
      * @param user
      */
-    void updateUser(User user);
+    public void updateUser(User user);
 
     public void createDB(String test);
     

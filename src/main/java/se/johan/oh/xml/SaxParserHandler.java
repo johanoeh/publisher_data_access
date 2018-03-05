@@ -36,8 +36,8 @@ public class SaxParserHandler {
         fileReaderHandler = new FileReaderHandler(xmlFile);
         sAXParserFactory = SAXParserFactory.newInstance();
         saxParser = sAXParserFactory.newSAXParser();
-        xMLDataHandler = new SubjectXMLDataHandler();
-        //saxParser.parse(fileReaderHandler.getInputStream(xmlFile), xMLDataHandler);  
+        xMLDataHandler = new SubjectXMLDataHandler(new DB(new DataAccessFacade()));
+        
     }
     
     /**
