@@ -1,5 +1,5 @@
 
-package se.johan.oh.xml.utils;
+package se.johan.oh.dataaccess;
 
 import se.johan.oh.containers.Answer;
 import se.johan.oh.containers.Chapter;
@@ -17,37 +17,34 @@ import se.johan.oh.containers.UserPerson;
  * database
  * @author johan
  */
-public interface DBInterface {
+public interface DBCreateorInterface {
     
-    void createDB(String dbName);
-    
-    public String getDBName();
-
+    public void createDB(String dbName);
     /**
      * @param subject
      */
-    void create(Subject subject);
+    public void create(Subject subject);
 
     /**
      * @param chapter
      */
-    void create(Chapter chapter);
+    public void create(Chapter chapter);
 
     /**
      * @param quiz the quiz to add
      */
-    void create(Quiz quiz);
+    public void create(Quiz quiz);
 
     /**
      *
      * @param question
      */
-    void create(Question question);
+    public void create(Question question);
 
     /**
      * @param answer
      */
-    void create(Answer answer);
+    public void create(Answer answer);
 
     public void create(Person person);
 

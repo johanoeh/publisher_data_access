@@ -14,5 +14,6 @@ import java.sql.Connection;
 public interface ConnectionHandlerInterface {
     void close();
     Connection getConnection();
+    public void setConnection(String connectionString);
     public void delete(int questionID, String DELETE_BY_QUESTION_ID);
 }

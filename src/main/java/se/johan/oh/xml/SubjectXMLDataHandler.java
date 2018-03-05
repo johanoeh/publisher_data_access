@@ -12,7 +12,7 @@ import se.johan.oh.containers.Quiz;
 import se.johan.oh.containers.Subject;
 import se.johan.oh.containers.UserPerson;
 import se.johan.oh.xml.utils.SimpleXMLElement;
-import se.johan.oh.xml.utils.DBInterface;
+import se.johan.oh.dataaccess.DBCreateorInterface;
 
 /**
  * Handler used to parse XML file containing content for a webpage
@@ -45,9 +45,9 @@ public class SubjectXMLDataHandler extends DefaultHandler {
     private Chapter currentChapter;
     private Quiz currentQuiz;
     private Question currentQuestion;
-    private DBInterface db;
+    private DBCreateorInterface db;
     
-    public SubjectXMLDataHandler(DBInterface db) {
+    public SubjectXMLDataHandler(DBCreateorInterface db) {
         this.db = db;
     }
 

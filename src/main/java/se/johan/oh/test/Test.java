@@ -30,7 +30,7 @@ public class Test {
     
    public void runTest(){
        
-       dao = new DataAccessFacade();
+       dao = new DataAccessFacade(null);
        currentSubjectID = dao.create(new Subject("Test subject","<h> hello</h> ", 0));
        int chapterID = -1;
        int quizID = -1;

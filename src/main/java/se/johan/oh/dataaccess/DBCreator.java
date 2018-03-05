@@ -1,42 +1,32 @@
 
-package se.johan.oh.xml.utils;
+package se.johan.oh.dataaccess;
 
-
-import se.johan.oh.connection.ConnectionHandler;
 import se.johan.oh.containers.*;
-import se.johan.oh.dataaccess.DataAccessFacade;
-import se.johan.oh.dataaccess.DataAccessInterface;
+
 
 
 /**
  * @author johan
  */
-public class DB implements DBInterface {
+public class DBCreator implements DBCreateorInterface {
   
     private int currentSubjectID;
     private int currentQuizID;
     private int currentQuestionId;
     private  DataAccessInterface dao;
-    private String connectionString;
     
 
-    public DB(DataAccessInterface dataAccessInterface) {
+    public DBCreator(DataAccessInterface dataAccessInterface) {
         this.dao = dataAccessInterface;
     }
     
-    public DB(){}
+    public DBCreator(){}
 
     @Override
     public void createDB(String connectionString){
-        this.dao = new DataAccessFacade();
-        this.connectionString = connectionString;
         dao.createDB(connectionString);
     }
     
-    @Override
-    public String getDBName(){
-        return connectionString;
-    }
 
     /**
      * @param subject
@@ -101,6 +91,10 @@ public class DB implements DBInterface {
         int create = dao.create(user);
     } 
 
+    /**
+     *
+     * @param userPerson
+     */
     @Override
     public void create(UserPerson userPerson) {
         int userId = dao.create(userPerson.getUser());

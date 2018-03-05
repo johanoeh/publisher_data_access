@@ -1,7 +1,7 @@
 
 package se.johan.oh.dataaccess;
 
-import java.sql.Connection;
+
 import se.johan.oh.connection.ConnectionHandler;
 import se.johan.oh.connection.ConnectionHandlerInterface;
 import se.johan.oh.containers.Answer;
@@ -34,14 +34,11 @@ public class DataAccessFacade implements DataAccessInterface {
         this.connectionHandler = connectionHandler;
         setConnectionHandler(connectionHandler);
     }
-    
-    public DataAccessFacade(){}
 
     @Override
     public void createDB(String connectionString) {
         System.err.println(connectionString);
         connectionHandler = new ConnectionHandler(connectionString);
-        Connection connection = connectionHandler.getConnection();
         SQLScriptHandler sQLScriptHandler = new SQLScriptHandler(SQL_FILE, connectionHandler);
         sQLScriptHandler.parse();
         setConnectionHandler(connectionHandler);

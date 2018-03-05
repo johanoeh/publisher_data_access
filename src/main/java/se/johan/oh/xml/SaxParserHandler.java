@@ -5,16 +5,17 @@
  */
 package se.johan.oh.xml;
 
-import se.johan.oh.xml.utils.DB;
+import se.johan.oh.dataaccess.DBCreator;
 
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
+import se.johan.oh.connection.ConnectionHandler;
 import se.johan.oh.dataaccess.DataAccessFacade;
 import se.johan.oh.utils.FileReaderHandler;
-import se.johan.oh.xml.utils.DBInterface;
+import se.johan.oh.dataaccess.DBCreateorInterface;
 
 /**
  * @author johan
@@ -24,7 +25,7 @@ public class SaxParserHandler {
     SubjectXMLDataHandler xMLDataHandler;
     FileReaderHandler fileReaderHandler;
     SAXParserFactory sAXParserFactory;
-    DBInterface dbInterface;
+    DBCreateorInterface dbInterface;
     String resource;
     SAXParser saxParser;
     
@@ -36,7 +37,7 @@ public class SaxParserHandler {
         fileReaderHandler = new FileReaderHandler(xmlFile);
         sAXParserFactory = SAXParserFactory.newInstance();
         saxParser = sAXParserFactory.newSAXParser();
-        xMLDataHandler = new SubjectXMLDataHandler(new DB(new DataAccessFacade()));
+        xMLDataHandler = new SubjectXMLDataHandler(new DBCreator(new DataAccessFacade(new ConnectionHandler(null))));
         
     }
     

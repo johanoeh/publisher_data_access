@@ -15,7 +15,7 @@ import se.johan.oh.dataaccess.QuizDataAccess;
 public class ConnectionHandler implements ConnectionHandlerInterface {
 
     private  String driver;
-    private  String URL;
+    private  String connectionString;
     private  String dbName;
     private  String password;
     private  String userName;
@@ -30,7 +30,7 @@ public class ConnectionHandler implements ConnectionHandlerInterface {
 
     /**
      *  The driver looks something like  org.apache.derby.jdbc.ClientDriver
-     *  The connection URL "jdbc:derby://localhost:1527/test;create=true";
+  The connection connectionString "jdbc:derby://localhost:1527/test;create=true";
      * @param driver
      * @param connectionURL
      * @param userName
@@ -38,21 +38,26 @@ public class ConnectionHandler implements ConnectionHandlerInterface {
      */
     public ConnectionHandler(String driver, String connectionURL, String userName ,String password){
         this.driver = driver;
-        this.URL = connectionURL;
+        this.connectionString = connectionURL;
         this.userName = userName;
         this.password = password;
     }
     /*
     public ConnectionHandler(){
         this.driver = DB_DRIVER;
-        this.URL = DB_CONNECTION;
+        this.connectionString = DB_CONNECTION;
         this.userName = USER;
         this.password = PASSWORD;
     }*/
     
     public ConnectionHandler(String connectionString){
-        this.URL = connectionString;
+        this.connectionString = connectionString;
         driver = DB_DRIVER;
+    }
+    
+    @Override
+    public void setConnection(String connectionString){
+        this.connectionString = connectionString;
     }
     
     @Override
@@ -65,7 +70,7 @@ public class ConnectionHandler implements ConnectionHandlerInterface {
             Logger.getLogger(ConnectionHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {    
-            dbConnection = DriverManager.getConnection(URL);
+            dbConnection = DriverManager.getConnection(connectionString);
             return dbConnection;
         } catch (SQLException ex) {
               Logger.getLogger(ConnectionHandler.class.getName()).log(Level.SEVERE, null, ex);
