@@ -1,7 +1,11 @@
 
 package se.johan.oh.dataaccess;
 
+import se.johan.oh.SQL.SQLScriptHandler;
+import se.johan.oh.connection.ConnectionHandler;
+import se.johan.oh.connection.ConnectionHandlerInterface;
 import se.johan.oh.containers.*;
+import static se.johan.oh.dataaccess.DataAccessFacade.SQL_FILE;
 
 
 
@@ -10,21 +14,27 @@ import se.johan.oh.containers.*;
  */
 public class DBCreator implements DBCreateorInterface {
   
+    // variables to keep track of id of currently inserted rows
     private int currentSubjectID;
     private int currentQuizID;
     private int currentQuestionId;
     private  DataAccessInterface dao;
+    private ConnectionHandlerInterface connectionHandler;
     
-
-    public DBCreator(DataAccessInterface dataAccessInterface) {
-        this.dao = dataAccessInterface;
+    /**
+     *
+     */
+    public DBCreator() {
+        connectionHandler = new ConnectionHandler(null);
+        this.dao = new DataAccessFacade(connectionHandler);  
     }
-    
-    public DBCreator(){}
 
     @Override
     public void createDB(String connectionString){
-        dao.createDB(connectionString);
+        System.err.println(connectionString);
+        connectionHandler.setConnection(connectionString);
+        SQLScriptHandler sQLScriptHandler = new SQLScriptHandler(SQL_FILE, connectionHandler);
+        sQLScriptHandler.parse();
     }
     
 
@@ -88,7 +98,7 @@ public class DBCreator implements DBCreateorInterface {
      */
     @Override
     public void create(User user) {
-        int create = dao.create(user);
+        dao.create(user);
     } 
 
     /**

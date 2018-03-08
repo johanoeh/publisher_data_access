@@ -34,17 +34,8 @@ public class DataAccessFacade implements DataAccessInterface {
         this.connectionHandler = connectionHandler;
         setConnectionHandler(connectionHandler);
     }
-
-    @Override
-    public void createDB(String connectionString) {
-        System.err.println(connectionString);
-        connectionHandler = new ConnectionHandler(connectionString);
-        SQLScriptHandler sQLScriptHandler = new SQLScriptHandler(SQL_FILE, connectionHandler);
-        sQLScriptHandler.parse();
-        setConnectionHandler(connectionHandler);
-    }
-    
     private void setConnectionHandler(ConnectionHandlerInterface connectionHandler) {
+        this.connectionHandler = connectionHandler;
         subjectDAO = new SubjectDataAccess(connectionHandler);
         chapterDAO = new ChapterDataAccess(connectionHandler);
         userDAO = new UsersDataAccess(connectionHandler);

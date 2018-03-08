@@ -11,7 +11,7 @@ import se.johan.oh.containers.User;
 import se.johan.oh.containers.UserPerson;
 
 /**
- * Minimal interface
+ * Minimal interface used to create and populate a new database.
  * Should implement methods to create database and methods to add each of the object
  * as an entry in the database.
  * database
@@ -46,9 +46,22 @@ public interface DBCreateorInterface {
      */
     public void create(Answer answer);
 
+    /**
+     *
+     * @param person
+     */
     public void create(Person person);
 
+    /**
+     *
+     * @param user
+     */
     public void create(User user);
+
+    /**
+     *
+     * @param userPerson
+     */
     public void create(UserPerson userPerson);
     
 }

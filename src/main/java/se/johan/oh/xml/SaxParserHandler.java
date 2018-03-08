@@ -12,8 +12,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
-import se.johan.oh.connection.ConnectionHandler;
-import se.johan.oh.dataaccess.DataAccessFacade;
 import se.johan.oh.utils.FileReaderHandler;
 import se.johan.oh.dataaccess.DBCreateorInterface;
 
@@ -37,8 +35,8 @@ public class SaxParserHandler {
         fileReaderHandler = new FileReaderHandler(xmlFile);
         sAXParserFactory = SAXParserFactory.newInstance();
         saxParser = sAXParserFactory.newSAXParser();
-        xMLDataHandler = new SubjectXMLDataHandler(new DBCreator(new DataAccessFacade(new ConnectionHandler(null))));
-        
+        dbInterface = new DBCreator();
+        xMLDataHandler = new SubjectXMLDataHandler(dbInterface);    
     }
     
     /**

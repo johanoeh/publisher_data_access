@@ -189,8 +189,5 @@ public interface DataAccessInterface {
      *
      * @param user
      */
-    public void updateUser(User user);
-
-    public void createDB(String test);
-    
+    public void updateUser(User user);   
 }
