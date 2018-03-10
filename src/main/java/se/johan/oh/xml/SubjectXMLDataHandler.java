@@ -95,7 +95,7 @@ public class SubjectXMLDataHandler extends DefaultHandler {
                 break;
             case CHAPTER:
                 currentChapter = SaxAttributeHandler.createChapter(atts);
-                currentSubject.addChapter(currentChapter);
+                db.create(currentChapter);
                 break;
             case CONTENT_HTML:
                 bContentHTML = true;
@@ -155,10 +155,8 @@ public class SubjectXMLDataHandler extends DefaultHandler {
                 bContentHTML = false;
                 break;
             case QUIZ:
-                currentSubject.add(currentQuiz);
                 break;
             case QUESTION:
-                currentQuiz.addQuestion(currentQuestion);
                 break;
             case ANSWER:
                 break;

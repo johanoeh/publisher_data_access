@@ -26,25 +26,12 @@ public class Subject implements Serializable{
     protected String subjectName;
     protected int subjectID;
     
-    List<Chapter>  chapters;
-    List<Quiz> quizzes;
     
     public Subject(){ 
-        this.subjectID = 0; init();
-    }
-    
-    private void init(){
-        chapters = new LinkedList<>();
-        quizzes = new LinkedList<>();
+        this.subjectID = 0;
     }
 
-    public List<Chapter> getChapters() {
-        return chapters;
-    }
 
-    public List<Quiz> getQuizzes() {
-        return quizzes;
-    }
 
     /**
      *
@@ -55,7 +42,6 @@ public class Subject implements Serializable{
         this.descriptionHTML = descriptionHTM;
         this.subjectName = subjectName;
         this.subjectID=0;
-        init();
     }
     
     /**
@@ -68,25 +54,8 @@ public class Subject implements Serializable{
         this.descriptionHTML = HTMLContent;
         this.subjectName = subjectName;
         this.subjectID = subjectID;
-        init();
     }
     
-    /**
-     * Adds a chapter to the subject
-     * @param chapter to add
-     */
-    public void addChapter(Chapter chapter){
-        chapters.add(chapter);
-    }
-    
-    /**
-     * Adds a quiz to the subject
-     * @param quiz to add
-     */
-    public void add(Quiz quiz){
-        quizzes.add(quiz);
-    }
-
     /**
      * @return the descriptionHTML
      */
@@ -129,5 +98,5 @@ public class Subject implements Serializable{
     public String toString(){
         return "Subject ID: "+ subjectID +" Subject name: "+ subjectName+" description HTML: "+ descriptionHTML;
     }
-  
+ 
 }
