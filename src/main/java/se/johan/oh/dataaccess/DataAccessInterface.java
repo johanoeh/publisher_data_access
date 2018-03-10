@@ -171,7 +171,7 @@ public interface DataAccessInterface {
      * @param quizID
      * @return
      */
-    public List<Question> readQuestionByQuizID(int quizID);
+    public List<Question> readQuestions(int quizID);
 
     /**
      *

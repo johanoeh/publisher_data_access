@@ -242,7 +242,7 @@ public class DataAccessFacade implements DataAccessInterface {
     }
     
     @Override
-    public List<Question> readQuestionByQuizID(int quizID){
+    public List<Question> readQuestions(int quizID){
         return questionDAO.readByQuizID(quizID);
     }
     

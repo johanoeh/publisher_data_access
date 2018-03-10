@@ -132,7 +132,7 @@ public class DataAccessMock implements DataAccessInterface{
     }
 
     @Override
-    public List<Question> readQuestionByQuizID(int quizID) {
+    public List<Question> readQuestions(int quizID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -34,7 +34,6 @@ public class Subject implements Serializable{
 
 
     /**
-     *
      * @param subjectName
      * @param descriptionHTM
      */
