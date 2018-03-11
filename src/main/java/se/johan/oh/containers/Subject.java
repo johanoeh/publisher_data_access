@@ -22,7 +22,7 @@ public class Subject implements Serializable{
     public static final String DESCRIPTION_HTML = "DESCRIPTION_HTML";
     public static final String SUBJECT_ID="SUBJECT_ID";
     
-    protected String descriptionHTML;
+    protected String HTML;
     protected String subjectName;
     protected int subjectID;
     
@@ -35,10 +35,10 @@ public class Subject implements Serializable{
 
     /**
      * @param subjectName
-     * @param descriptionHTM
+     * @param HTML
      */
-    public Subject(String subjectName, String descriptionHTM) {
-        this.descriptionHTML = descriptionHTM;
+    public Subject(String subjectName, String HTML) {
+        this.HTML = HTML;
         this.subjectName = subjectName;
         this.subjectID=0;
     }
@@ -50,24 +50,24 @@ public class Subject implements Serializable{
      * @param subjectID
      */
     public Subject(String subjectName, String HTMLContent, int subjectID) {
-        this.descriptionHTML = HTMLContent;
+        this.HTML = HTMLContent;
         this.subjectName = subjectName;
         this.subjectID = subjectID;
     }
     
     /**
-     * @return the descriptionHTML
+     * @return the HTML
      */
-    public String getDescriptionHTML() {
-        return descriptionHTML;
+    public String getHTML() {
+        return HTML;
     }
 
     /**
      * Sets the Description (intro) text for the subject use HTML formated string
-     * @param descriptionHTML the descriptionHTML to set
+     * @param HTML the HTML to set
      */
-    public void setDescriptionHTML(String descriptionHTML) {
-        this.descriptionHTML = descriptionHTML;
+    public void setHTML(String HTML) {
+        this.HTML = HTML;
     }
 
     /**
@@ -95,7 +95,7 @@ public class Subject implements Serializable{
     
     @Override
     public String toString(){
-        return "Subject ID: "+ subjectID +" Subject name: "+ subjectName+" description HTML: "+ descriptionHTML;
+        return "Subject ID: "+ subjectID +" Subject name: "+ subjectName+" description HTML: "+ HTML;
     }
  
 }
