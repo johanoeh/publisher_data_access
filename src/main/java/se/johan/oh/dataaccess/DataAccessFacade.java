@@ -28,6 +28,7 @@ public class DataAccessFacade implements DataAccessInterface {
     private QuestionDataAccess questionDAO;
     private AnswerDataAccess answerDAO;
     private ConnectionHandlerInterface connectionHandler;
+    
     public static final String SQL_FILE ="file/publish_sql.sql";
     
     public DataAccessFacade(ConnectionHandlerInterface connectionHandler){
