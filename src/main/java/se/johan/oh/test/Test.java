@@ -66,7 +66,7 @@ public class Test {
        if (quizID >= 0) {
            System.out.println("successfully created quiz with id: " + quizID);
            Question question = new Question(0, quizID, "What is true?");
-           questionID = dao.createQuestion(question);
+           questionID = dao.create(question);
        }
        
        if(questionID >= 0){

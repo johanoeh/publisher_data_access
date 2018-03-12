@@ -143,7 +143,7 @@ public class SubjectXMLDataHandler extends DefaultHandler {
         
         switch (qName.toLowerCase()) {
             case SUBJECT:
-                currentSubject.setHTML(currenSubjectXHTML.toString());
+                currentSubject.setHtml(currenSubjectXHTML.toString());
                 db.create(currentSubject);
             case DESCRIPTION_HTML:
                 bDescriptionHTML = false;

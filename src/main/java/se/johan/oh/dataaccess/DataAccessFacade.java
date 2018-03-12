@@ -237,7 +237,7 @@ public class DataAccessFacade implements DataAccessInterface {
     /* Access methods for Questions ------------------------------------------*/
     
     @Override
-    public int createQuestion(Question question){
+    public int create(Question question){
         return questionDAO.create(question);
     }
     

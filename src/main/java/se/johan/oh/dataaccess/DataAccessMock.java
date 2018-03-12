@@ -52,7 +52,7 @@ public class DataAccessMock implements DataAccessInterface{
     }
 
     @Override
-    public int createQuestion(Question question) {
+    public int create(Question question) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

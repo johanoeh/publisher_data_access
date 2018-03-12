@@ -71,7 +71,7 @@ public class DBCreator implements DBCreateorInterface {
     @Override
     public void create(Question question){
         question.setQuizID(currentQuizID);
-        currentQuestionId = dao.createQuestion(question);
+        currentQuestionId = dao.create(question);
     }
     
     /**

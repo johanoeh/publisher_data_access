@@ -90,7 +90,7 @@ public class SubjectDataAccess {
             PreparedStatement preparedStatement
                     = connection.prepareStatement(Subject.INSERT_SUBJECT_SQL,Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, subject.getSubjectName());
-            preparedStatement.setString(2, subject.getHTML());
+            preparedStatement.setString(2, subject.getHtml());
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if(resultSet.next())

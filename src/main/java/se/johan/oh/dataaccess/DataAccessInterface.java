@@ -120,7 +120,7 @@ public interface DataAccessInterface {
    
 
     /* Access methods for Questions ------------------------------------------*/
-    public int createQuestion(Question question);
+    public int create(Question question);
 
     public void deleteByQuestionID(int questionID);
     

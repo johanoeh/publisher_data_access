@@ -2,8 +2,6 @@
 package se.johan.oh.containers;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author johan
@@ -22,7 +20,7 @@ public class Subject implements Serializable{
     public static final String DESCRIPTION_HTML = "DESCRIPTION_HTML";
     public static final String SUBJECT_ID="SUBJECT_ID";
     
-    protected String HTML;
+    protected String html;
     protected String subjectName;
     protected int subjectID;
     
@@ -31,14 +29,12 @@ public class Subject implements Serializable{
         this.subjectID = 0;
     }
 
-
-
     /**
      * @param subjectName
-     * @param HTML
+     * @param html
      */
-    public Subject(String subjectName, String HTML) {
-        this.HTML = HTML;
+    public Subject(String subjectName, String html) {
+        this.html = html;
         this.subjectName = subjectName;
         this.subjectID=0;
     }
@@ -50,24 +46,24 @@ public class Subject implements Serializable{
      * @param subjectID
      */
     public Subject(String subjectName, String HTMLContent, int subjectID) {
-        this.HTML = HTMLContent;
+        this.html = HTMLContent;
         this.subjectName = subjectName;
         this.subjectID = subjectID;
     }
     
     /**
-     * @return the HTML
+     * @return the html
      */
-    public String getHTML() {
-        return HTML;
+    public String getHtml() {
+        return html;
     }
 
     /**
-     * Sets the Description (intro) text for the subject use HTML formated string
-     * @param HTML the HTML to set
+     * Sets the Description (intro) text for the subject use html formated string
+     * @param html the html to set
      */
-    public void setHTML(String HTML) {
-        this.HTML = HTML;
+    public void setHtml(String html) {
+        this.html = html;
     }
 
     /**
@@ -95,7 +91,7 @@ public class Subject implements Serializable{
     
     @Override
     public String toString(){
-        return "Subject ID: "+ subjectID +" Subject name: "+ subjectName+" description HTML: "+ HTML;
+        return "Subject ID: "+ subjectID +" Subject name: "+ subjectName+" description HTML: "+ html;
     }
  
 }
